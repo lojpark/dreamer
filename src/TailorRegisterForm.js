@@ -10,58 +10,41 @@ function TailorRegisterForm() {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        What is your gender?
+        How old are you?
       </Typography>
       <RadioGroup name="gender" className="Gender">
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
+        <FormControlLabel value="age1" control={<Radio />} label="~ 15" />
+        <FormControlLabel value="age2" control={<Radio />} label="16 ~ 25" />
+        <FormControlLabel value="age3" control={<Radio />} label="26 ~ 35" />
+        <FormControlLabel value="age4" control={<Radio />} label="36 ~" />
       </RadioGroup>
       <Typography variant="h6" gutterBottom>
         What are you interested in?
       </Typography>
       <Grid container spacing={0}>
         <Grid item xs={12} sm={3}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="game" value="yes" />}
-            label="Game"
-          />
+          <FormControlLabel control={<Checkbox color="secondary" name="game" />} label="Game" />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="trip" value="yes" />}
-            label="Trip"
-          />
+          <FormControlLabel control={<Checkbox color="secondary" name="trip" />} label="Trip" />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="music" value="yes" />}
-            label="Music"
-          />
+          <FormControlLabel control={<Checkbox color="secondary" name="music" />} label="Music" />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="art" value="yes" />}
-            label="Art"
-          />
+          <FormControlLabel control={<Checkbox color="secondary" name="art" />} label="Art" />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="movie" value="yes" />}
-            label="Movie"
-          />
+          <FormControlLabel control={<Checkbox color="secondary" name="movie" />} label="Movie" />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="book" value="yes" />}
-            label="Book"
-          />
+          <FormControlLabel control={<Checkbox color="secondary" name="literature" />} label="Literature" />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="sport" value="yes" />}
-            label="Sport"
-          />
+          <FormControlLabel control={<Checkbox color="secondary" name="sport" />} label="Sport" />
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <FormControlLabel control={<Checkbox color="secondary" name="cook" />} label="Cook" />
         </Grid>
       </Grid>
     </React.Fragment>

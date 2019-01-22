@@ -3,10 +3,20 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 function TailorRegisterForm() {
   return (
     <React.Fragment>
+      <Typography variant="h6" gutterBottom>
+        What is your gender?
+      </Typography>
+      <RadioGroup name="gender" className="Gender">
+        <FormControlLabel value="female" control={<Radio />} label="Female" />
+        <FormControlLabel value="male" control={<Radio />} label="Male" />
+        <FormControlLabel value="other" control={<Radio />} label="Other" />
+      </RadioGroup>
       <Typography variant="h6" gutterBottom>
         What are you interested in?
       </Typography>

@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import BasicRegisterForm from './BasicRegisterForm';
 import PaymentRegisterForm from './PaymentRegisterForm';
-import Review from './Review';
+import TailorRegisterForm from './TailorRegisterForm';
 
 const styles = theme => ({
   appBar: {
@@ -51,7 +51,7 @@ const styles = theme => ({
   },
 });
 
-const steps = ['Basic information', 'Payment details', 'Review your order'];
+const steps = ['Basic information', 'Payment details', 'Tailor your experience'];
 
 function getStepContent(step) {
   switch (step) {
@@ -60,7 +60,7 @@ function getStepContent(step) {
     case 1:
       return <PaymentRegisterForm />;
     case 2:
-      return <Review />;
+      return <TailorRegisterForm />;
     default:
       throw new Error('Unknown step');
   }

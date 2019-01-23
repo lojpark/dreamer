@@ -64,6 +64,11 @@ function getStepContent(step) {
 class Register extends React.Component {
   state = {
     activeStep: 0,
+    id: '',
+    password: '',
+    fname: '',
+    lname: '',
+    mail: ''
   };
 
   handleNext = () => {

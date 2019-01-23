@@ -4,6 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
+import SignedOutLinks from './SignedOutLinks'
+import SignedInLinks from './SignedInLinks'
 const styles = theme => (
     {
 
@@ -13,6 +15,9 @@ const styles = theme => (
         icon: {
             marginRight: theme.spacing.unit * 2,
         },
+        grow: {
+            flexGrow: 1,
+        }
     }
 )
 
@@ -25,6 +30,9 @@ const Appbar = ({classes}) => {
                     <Typography variant="h6" color="inherit" noWrap>
                         Album layout
                     </Typography>
+                    <div className={classes.grow}/>
+                    <SignedOutLinks />
+                    <SignedInLinks />
                 </Toolbar>
             </AppBar>
         </div>

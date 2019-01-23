@@ -7,6 +7,9 @@ import { withStyles } from '@material-ui/core/styles';
 import AlbumItem from './AlbumItem'
 import Footer from '../layout/Footer'
 import AlbumTop from './AlbumTop'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+
 
 const styles = theme => (
   {
@@ -30,10 +33,9 @@ const styles = theme => (
 
 });
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-function Album(props) {
-  const { classes } = props;
+const Album = ({classes, cards}) => {
   
   return (
     <React.Fragment>
@@ -60,4 +62,15 @@ Album.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Album);
+const mapStateToProps = (state) => {
+  //this data is from rootReducer (albumReducer). 
+  console.log(state); 
+  return {
+    cards: state.album.card,
+  }
+}
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(Album);

@@ -45,7 +45,7 @@ function Album(props) {
           <Grid container spacing={40}>
             {cards.map(card => {
               return (
-                <AlbumItem card={card} /> 
+                <AlbumItem card={card} key={card}/> 
               )
             })}
           </Grid>

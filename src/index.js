@@ -7,6 +7,9 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 
 const theme = createMuiTheme({
     //override the theme here
+    typography: {
+        useNextVariants: true,
+    }
 });
 
 

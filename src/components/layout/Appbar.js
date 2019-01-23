@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import SignedOutLinks from './SignedOutLinks'
 import SignedInLinks from './SignedInLinks'
+import { Link } from 'react-router-dom'
 const styles = theme => (
     {
 
@@ -26,8 +27,8 @@ const Appbar = ({classes}) => {
         <div>
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
-                    <CameraIcon className={classes.icon} />
-                    <Typography variant="h6" color="inherit" noWrap>
+                    <CameraIcon className={classes.icon}/>
+                    <Typography variant="h6" color="inherit" noWrap  component={Link} to="/" style={{textDecoration: 'none'}}>
                         Album layout
                     </Typography>
                     <div className={classes.grow}/>

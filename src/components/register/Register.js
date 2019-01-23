@@ -48,28 +48,30 @@ const styles = theme => ({
 
 const steps = ['Basic information', 'Payment details', 'Tailor your experience'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <BasicRegisterForm />;
-    case 1:
-      return <PaymentRegisterForm />;
-    case 2:
-      return <TailorRegisterForm />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 class Register extends React.Component {
   state = {
     activeStep: 0,
     id: '',
     password: '',
-    fname: '',
-    lname: '',
+    firstName: '',
+    lastName: '',
     mail: ''
   };
+
+  getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <BasicRegisterForm callbackFromParent={this.myCallback} />;
+      case 1:
+        return <PaymentRegisterForm />;
+      case 2:
+        return <TailorRegisterForm />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   handleNext = () => {
     this.setState(state => ({
@@ -87,6 +89,13 @@ class Register extends React.Component {
     this.setState({
       activeStep: 0,
     });
+  };
+
+  myCallback = (dataFromChild) => {
+    this.setState({
+      [dataFromChild.target.id]: dataFromChild.target.value
+    })
+    console.log(this.state.id, this.state.password);
   };
 
   render() {
@@ -120,7 +129,7 @@ class Register extends React.Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getStepContent(activeStep)}
+                  {this.getStepContent(activeStep)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={this.handleBack} className={classes.button}>

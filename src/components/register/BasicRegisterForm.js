@@ -4,6 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 class BagicRegisterForm extends React.Component {
+  handleChange = (e) => {
+    this.props.callbackFromParent(e);
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -17,6 +21,7 @@ class BagicRegisterForm extends React.Component {
               id="id"
               name="id"
               label="ID"
+              onChange={this.handleChange}
               fullWidth
             />
           </Grid>
@@ -26,6 +31,7 @@ class BagicRegisterForm extends React.Component {
               id="password"
               name="password"
               label="Password"
+              onChange={this.handleChange}
               fullWidth
             />
           </Grid>
@@ -35,6 +41,7 @@ class BagicRegisterForm extends React.Component {
               id="firstName"
               name="firstName"
               label="First name"
+              onChange={this.handleChange}
               fullWidth
               autoComplete="fname"
             />
@@ -45,6 +52,7 @@ class BagicRegisterForm extends React.Component {
               id="lastName"
               name="lastName"
               label="Last name"
+              onChange={this.handleChange}
               fullWidth
               autoComplete="lname"
             />
@@ -55,6 +63,7 @@ class BagicRegisterForm extends React.Component {
               id="mail"
               name="mail"
               label="E-mail address"
+              onChange={this.handleChange}
               fullWidth
             />
           </Grid>

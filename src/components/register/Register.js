@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import BasicRegisterForm from './BasicRegisterForm';
 import PaymentRegisterForm from './PaymentRegisterForm';
 import TailorRegisterForm from './TailorRegisterForm';
+import { connect } from 'react-redux';
+import { register } from '../../store/actions/authActions'
 
 const styles = theme => ({
   
@@ -48,28 +50,40 @@ const styles = theme => ({
 
 const steps = ['Basic information', 'Payment details', 'Tailor your experience'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <BasicRegisterForm />;
-    case 1:
-      return <PaymentRegisterForm />;
-    case 2:
-      return <TailorRegisterForm />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 class Register extends React.Component {
   state = {
     activeStep: 0,
+    id: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    email: ''
   };
 
-  handleNext = () => {
+  getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <BasicRegisterForm callbackFromParent={this.myCallback} />;
+      case 1:
+        return <PaymentRegisterForm />;
+      case 2:
+        return <TailorRegisterForm />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+
+  handleNext = (e) => {
     this.setState(state => ({
       activeStep: state.activeStep + 1,
     }));
+    // Submit
+    if (this.state.activeStep === steps.length - 1) {
+      e.preventDefault();
+      this.props.register(this.state)
+    }
   };
 
   handleBack = () => {
@@ -82,6 +96,13 @@ class Register extends React.Component {
     this.setState({
       activeStep: 0,
     });
+  };
+
+  myCallback = (dataFromChild) => {
+    this.setState({
+      [dataFromChild.target.id]: dataFromChild.target.value
+    })
+    console.log(this.state.id, this.state.password);
   };
 
   render() {
@@ -115,7 +136,7 @@ class Register extends React.Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getStepContent(activeStep)}
+                  {this.getStepContent(activeStep)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={this.handleBack} className={classes.button}>
@@ -145,4 +166,10 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Register);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    register: (newUser) => dispatch(register(newUser))
+  }
+}
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(Register));

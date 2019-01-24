@@ -4,9 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './store/reducers/rootReducer';
+import thunk from 'redux-thunk'
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
+import { reduxFirestore, getFirestore } from 'redux-firestore'
+import firebaseConfig from './config/firebaseConfig'
 
 const theme = createMuiTheme({
     //override the theme here
@@ -15,7 +19,14 @@ const theme = createMuiTheme({
     }
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer,
+    compose(
+        applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
+        reduxFirestore(firebaseConfig),
+        reactReduxFirebase(firebaseConfig)
+    )
+);
+
 ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider theme={theme} >

@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import BasicRegisterForm from './BasicRegisterForm';
 import PaymentRegisterForm from './PaymentRegisterForm';
 import TailorRegisterForm from './TailorRegisterForm';
+import { connect } from 'react-redux';
+import { register } from '../../store/actions/authActions'
 
 const styles = theme => ({
   
@@ -57,7 +59,7 @@ class Register extends React.Component {
     password: '',
     firstName: '',
     lastName: '',
-    mail: ''
+    email: ''
   };
 
   getStepContent(step) {
@@ -73,12 +75,14 @@ class Register extends React.Component {
     }
   }
 
-  handleNext = () => {
+  handleNext = (e) => {
     this.setState(state => ({
       activeStep: state.activeStep + 1,
     }));
+    // Submit
     if (this.state.activeStep === steps.length - 1) {
-      console.log("HI");
+      e.preventDefault();
+      this.props.register(this.state)
     }
   };
 
@@ -162,4 +166,10 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Register);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    register: (newUser) => dispatch(register(newUser))
+  }
+}
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(Register));

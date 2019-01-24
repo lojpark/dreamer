@@ -11,10 +11,14 @@ const authReducer = (state = initState, action) => {
                 authError: null
             }
         case 'REGISTER_ERROR':
-            console.log('register error');
+            console.log('register error', action.error.message);
             return {
                 ...state,
                 authError: action.error.message
             }
+        default:
+            return state;
     }
 }
+
+export default authReducer;

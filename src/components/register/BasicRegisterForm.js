@@ -60,8 +60,8 @@ class BagicRegisterForm extends React.Component {
           <Grid item xs={12}>
             <TextField
               required
-              id="mail"
-              name="mail"
+              id="email"
+              name="email"
               label="E-mail address"
               onChange={this.handleChange}
               fullWidth

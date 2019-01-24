@@ -77,6 +77,9 @@ class Register extends React.Component {
     this.setState(state => ({
       activeStep: state.activeStep + 1,
     }));
+    if (this.state.activeStep === steps.length - 1) {
+      console.log("HI");
+    }
   };
 
   handleBack = () => {

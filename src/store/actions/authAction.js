@@ -12,9 +12,9 @@ export const register = (newUser) => {
                 lastName: newUser.lastName
             })
         }).then(() => {
-            dispatch({ type: 'SIGNUP_SUCCESS' })
+            dispatch({ type: 'REGISTER_SUCCESS' })
         }).catch(error => {
-            dispatch({ type: 'SIGNUP_ERROR', error })
+            dispatch({ type: 'REGISTER_ERROR', error })
         })
     }
 }

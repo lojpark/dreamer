@@ -102,11 +102,11 @@ class Register extends React.Component {
     });
   };
 
+  // Get state from child (BasicRegisterForm)
   myCallback = (dataFromChild) => {
     this.setState({
       [dataFromChild.target.id]: dataFromChild.target.value
     })
-    console.log(this.state.id, this.state.password);
   };
 
   render() {

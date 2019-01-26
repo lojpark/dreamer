@@ -12,6 +12,7 @@ import PaymentRegisterForm from './PaymentRegisterForm';
 import TailorRegisterForm from './TailorRegisterForm';
 import { connect } from 'react-redux';
 import { register } from '../../store/actions/authActions'
+import './Register.css'
 
 const styles = theme => ({
   
@@ -55,11 +56,10 @@ const steps = ['Basic information', 'Payment details', 'Tailor your experience']
 class Register extends React.Component {
   state = {
     activeStep: 0,
-    id: '',
+    email: '',
     password: '',
     firstName: '',
-    lastName: '',
-    email: ''
+    lastName: ''
   };
 
   getStepContent(step) {
@@ -75,14 +75,26 @@ class Register extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    // Go next step when success register
+    if (nextProps.authSuccess) {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1,
+      }));
+    }
+  }
+
   handleNext = (e) => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1,
-    }));
-    // Submit
-    if (this.state.activeStep === steps.length - 1) {
+    // Authentication
+    if (this.state.activeStep === 0) {
       e.preventDefault();
-      this.props.register(this.state)
+      this.props.register(this.state);
+    }
+    
+    else {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1,
+      }));
     }
   };
 
@@ -98,15 +110,15 @@ class Register extends React.Component {
     });
   };
 
+  // Get state from child (BasicRegisterForm)
   myCallback = (dataFromChild) => {
     this.setState({
       [dataFromChild.target.id]: dataFromChild.target.value
     })
-    console.log(this.state.id, this.state.password);
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, authError } = this.props;
     const { activeStep } = this.state;
 
     return (
@@ -155,6 +167,9 @@ class Register extends React.Component {
                 </React.Fragment>
               )}
             </React.Fragment>
+            <div className="red-text center">
+              { authError ? <p>{ authError }</p> : null }
+            </div>
           </Paper>
         </main>
       </React.Fragment>
@@ -166,10 +181,17 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = (state) => {
+  return {
+    authSuccess: state.auth.authSuccess,
+    authError: state.auth.authError
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     register: (newUser) => dispatch(register(newUser))
   }
 }
 
-export default withStyles(styles)(connect(null, mapDispatchToProps)(Register));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Register));

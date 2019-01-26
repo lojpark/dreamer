@@ -76,14 +76,23 @@ class Register extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    // Go next step when success register
+    if (nextProps.authSuccess) {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1,
+      }));
+    }
+  }
+
   handleNext = (e) => {
     // Authentication
     if (this.state.activeStep === 0) {
       e.preventDefault();
       this.props.register(this.state);
     }
-    // Register success
-    if (!this.props.authError) {
+    
+    else {
       this.setState(state => ({
         activeStep: state.activeStep + 1,
       }));
@@ -175,6 +184,7 @@ Register.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
+    authSuccess: state.auth.authSuccess,
     authError: state.auth.authError
   }
 }

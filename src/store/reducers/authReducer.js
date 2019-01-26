@@ -1,4 +1,5 @@
 const initState = {
+    authSuccess: null,
     authError: null
 }
 
@@ -8,12 +9,14 @@ const authReducer = (state = initState, action) => {
             console.log('register success');
             return {
                 ...state,
+                authSuccess: true,
                 authError: null
             }
         case 'REGISTER_ERROR':
             console.log('register error', action.error.message);
             return {
                 ...state,
+                authSuccess: false,
                 authError: action.error.message
             }
         default:

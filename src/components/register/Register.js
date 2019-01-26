@@ -12,6 +12,7 @@ import PaymentRegisterForm from './PaymentRegisterForm';
 import TailorRegisterForm from './TailorRegisterForm';
 import { connect } from 'react-redux';
 import { register } from '../../store/actions/authActions'
+import './Register.css'
 
 const styles = theme => ({
   

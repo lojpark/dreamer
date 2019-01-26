@@ -76,13 +76,16 @@ class Register extends React.Component {
   }
 
   handleNext = (e) => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1,
-    }));
-    // Submit
-    if (this.state.activeStep === steps.length - 1) {
+    // Authentication
+    if (this.state.activeStep === 0) {
       e.preventDefault();
-      this.props.register(this.state)
+      this.props.register(this.state);
+    }
+    // Register success
+    if (!this.props.authError) {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1,
+      }));
     }
   };
 
@@ -106,7 +109,7 @@ class Register extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, authError } = this.props;
     const { activeStep } = this.state;
 
     return (
@@ -155,6 +158,9 @@ class Register extends React.Component {
                 </React.Fragment>
               )}
             </React.Fragment>
+            <div className="red-text center">
+              { authError ? <p>{ authError }</p> : null }
+            </div>
           </Paper>
         </main>
       </React.Fragment>
@@ -166,10 +172,16 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.authError
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     register: (newUser) => dispatch(register(newUser))
   }
 }
 
-export default withStyles(styles)(connect(null, mapDispatchToProps)(Register));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Register));

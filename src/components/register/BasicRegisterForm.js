@@ -15,17 +15,17 @@ class BagicRegisterForm extends React.Component {
           Basic information
         </Typography>
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               required
-              id="id"
-              name="id"
-              label="ID"
+              id="email"
+              name="email"
+              label="E-mail address"
               onChange={this.handleChange}
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               required
               id="password"
@@ -55,16 +55,6 @@ class BagicRegisterForm extends React.Component {
               onChange={this.handleChange}
               fullWidth
               autoComplete="lname"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="email"
-              name="email"
-              label="E-mail address"
-              onChange={this.handleChange}
-              fullWidth
             />
           </Grid>
         </Grid>

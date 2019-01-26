@@ -56,11 +56,10 @@ const steps = ['Basic information', 'Payment details', 'Tailor your experience']
 class Register extends React.Component {
   state = {
     activeStep: 0,
-    id: '',
+    email: '',
     password: '',
     firstName: '',
-    lastName: '',
-    email: ''
+    lastName: ''
   };
 
   getStepContent(step) {

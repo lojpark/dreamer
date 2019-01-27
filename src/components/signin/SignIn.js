@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import BasicSignInForm from './BasicSignInForm';
 
-class SignInForm extends Component {
+class SignIn extends Component {
     render(){
         return(
             <div>
@@ -13,4 +13,4 @@ class SignInForm extends Component {
 
     }
 }
-export default SignInForm;
+export default SignIn;

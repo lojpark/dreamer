@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const SignedOutLinks = () => {
   return (
     <div>
-        <Button color="inherit">Sign In</Button>
+        <Button color="inherit" component={Link} to="/signin">Sign In</Button>
         <Button color="inherit" component={Link} to="/register">Register</Button>
     </div>
   )

@@ -2,9 +2,50 @@ import React,{Component} from 'react';
 import './BasicSignInForm.css';
 import { connect } from 'react-redux';
 import { signin } from "../../store/actions/authSignInActions";
-
-//html message fail login
-
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import AlertDialog from "./PopUpMessageLoginFail";
+const styles = theme => ({
+    main: {
+        width: 'auto',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    paper: {
+        marginTop: theme.spacing.unit * 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    },
+    avatar: {
+        margin: theme.spacing.unit,
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing.unit,
+    },
+    submit: {
+        marginTop: theme.spacing.unit * 3,
+    },
+});
 
 class BasicSignInForm extends Component {
     constructor(props){
@@ -31,46 +72,47 @@ class BasicSignInForm extends Component {
 
     render(){
             const { authSignInError } = this.props;
-            const PopUpMessageFailLogin =
-            (<div className="alert alert-info" role="alert" styles = "top:46px">
-                The username and password you entered did not match our records. Please double-check and try again.
-            </div>);
+             const { classes} = this.props;
+
         return(
 
             <div>
-
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-                <style type="text/css"></style>
-
-
-                {/*check whether sign in is success or not .. and then pop up message if it fail*/}
-                {authSignInError ?  <div className="alert alert-info" role="alert" styles = "top:46px"  >
-                    <div className="text-center">
-                    The username and password you entered did not match our records. Please double-check and try again.
-                    </div>
-                </div> : <div></div>}
-
-                <div className="login-form">
-                    <form onSubmit={this.login}>
-                        <h2 className="text-center">Log in</h2>
-                        <div className="form-group">
-                            <input type="text" className="form-control" placeholder="Username" name="email" required="required" value={this.state.email} onChange={this.handleChange}/>
-                        </div>
-                        <div className="form-group">
-                            <input type="password" className="form-control" placeholder="Password" name="password" required="required" value={this.state.password} onChange={this.handleChange}/>
-                        </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-primary btn-block" >Log in</button>
-                        </div>
-                        <div className="clearfix">
-                            <label className="pull-left checkbox-inline"><input type="checkbox"/> Remember me</label>
-                            <a href="#" className="pull-right">Forgot Password?</a>
-                        </div>
-                    </form>
-                    <p className="text-center"><a href="#">Create an Account</a></p>
-                </div>
+                {authSignInError ?  <AlertDialog/> : <div></div>}
+                <main className={classes.main}>
+                    <CssBaseline />
+                    <Paper className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        <form className={classes.form} onSubmit={this.login}>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <Input id="email" name="email" autoComplete="email" autoFocus value={this.state.email}onChange={this.handleChange}/>
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password" >Password</InputLabel>
+                                <Input name="password" type="password" id="password" autoComplete="current-password" value={this.state.password} onChange={this.handleChange}/>
+                            </FormControl>
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Sign in
+                            </Button>
+                        </form>
+                    </Paper>
+                </main>
             </div>
-
         );
     }
 }
@@ -81,4 +123,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null,mapDispatchToProps)(BasicSignInForm);
+export default withStyles(styles)(connect(null,mapDispatchToProps)(BasicSignInForm));

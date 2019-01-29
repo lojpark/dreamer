@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import BasicSignInForm from './BasicSignInForm';
 import { connect } from 'react-redux';
-import withStyles from "@material-ui/core/styles/withStyles";
 
 class SignIn extends Component {
     render(){

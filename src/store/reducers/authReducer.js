@@ -6,13 +6,20 @@ const initState = {
 }
 
 const authReducer = (state = initState, action) => {
-    switch (action.type) {
+     switch (action.type) {
         case 'REGISTER_SUCCESS':
             console.log('register success');
             return {
                 ...state,
                 authSuccess: true,
                 authError: null
+            }
+        case 'NOT_SAME':
+            console.log('confirm password');
+            return {
+                ...state,
+                authSuccess: false,
+                authError: "Confirm Password not equal"
             }
         case 'REGISTER_ERROR':
             console.log('register error', action.error.message);

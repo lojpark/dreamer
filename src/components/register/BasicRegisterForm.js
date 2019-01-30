@@ -25,12 +25,24 @@ class BagicRegisterForm extends React.Component {
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               required
               id="password"
               name="password"
+              type="password"
               label="Password"
+              onChange={this.handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="pass_chk"
+              name="pass_chk"
+              type="password"
+              label="Comfirm Password"
               onChange={this.handleChange}
               fullWidth
             />

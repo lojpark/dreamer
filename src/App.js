@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Album from './components/album/Album';
 import Register from './components/register/Register'
 import Appbar from './components/layout/Appbar'
-
+import SignIn from './components/signin/SignIn'
 
 class App extends Component {
   render() {
@@ -14,6 +14,7 @@ class App extends Component {
           <Switch>
             <Route exact path = "/" component={Album} />  
             <Route exact path = "/register" component={Register} />
+            <Route exact path = "/signin" component={SignIn} />
           </Switch>
 
         </div>

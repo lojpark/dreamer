@@ -7,6 +7,7 @@ import CameraIcon from '@material-ui/icons/PhotoCamera';
 import SignedOutLinks from './SignedOutLinks'
 import SignedInLinks from './SignedInLinks'
 import { Link } from 'react-router-dom'
+import {connect} from "react-redux";
 const styles = theme => (
     {
 
@@ -22,22 +23,36 @@ const styles = theme => (
     }
 )
 
-const Appbar = ({classes}) => {
-    return (
-        <div>
-            <AppBar position="static" className={classes.appBar}>
-                <Toolbar>
-                    <CameraIcon className={classes.icon}/>
-                    <Typography variant="h6" color="inherit" noWrap  component={Link} to="/" style={{textDecoration: 'none'}}>
-                        Album layout
-                    </Typography>
-                    <div className={classes.grow}/>
-                    <SignedOutLinks />
-                    <SignedInLinks />
-                </Toolbar>
-            </AppBar>
-        </div>
-    )
+
+class Appbar extends React.Component {
+    constructor(props){
+        super(props);
+
+    }
+    render(){
+        const { authSignInSuccess,classes } = this.props;
+        return (
+            <div>
+                <AppBar position="static" className={classes.appBar}>
+                    <Toolbar>
+                        <CameraIcon className={classes.icon}/>
+                        <Typography variant="h6" color="inherit" noWrap  component={Link} to="/" style={{textDecoration: 'none'}}>
+                            Album layout
+                        </Typography>
+                        <div className={classes.grow}/>
+                        {authSignInSuccess ?  <SignedInLinks/> : <SignedOutLinks/>}
+                    </Toolbar>
+                </AppBar>
+            </div>
+        )
+    }
 }
 
-export default withStyles(styles)(Appbar)
+const mapStateToProps= (state) =>{
+    return {
+        authSignInSuccess : state.auth.authSignInSuccess,
+        // authSignInError : state.auth.authSignInError
+    }
+}
+
+export default withStyles(styles)(connect(mapStateToProps,null)(Appbar))

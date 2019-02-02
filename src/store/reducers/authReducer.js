@@ -1,4 +1,3 @@
-import {applyMiddleware as dispatch} from "redux";
 
 const initState = {
     authSuccess: null,
@@ -76,17 +75,22 @@ const authReducer = (state = initState, action) => {
              console.log('sign out success');
              return {
                  ...state,
-                 ...state,
                  authSignInSuccess: null,
-                 authSignInError:null
+                 authSignInError:null,
+                 firstName : null,
+                 lastName : null,
+                 cardNumber : null,
+                 cardName : null,
+                 cvv : null,
+                 expDate : null,
              }
          case 'SIGNOUT_ERROR':
              console.log('sign out error',action.error.message);
              return {
                  ...state,
-                 ...state,
                  authSignInSuccess: null,
-                 authSignInError:action.error.message
+                 authSignInError:action.error.message,
+
              }
         default:
             return state;

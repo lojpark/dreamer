@@ -59,7 +59,11 @@ class Register extends React.Component {
     email: '',
     password: '',
     firstName: '',
-    lastName: ''
+    lastName: '',
+        cardName: '',
+        cardNumber: '',
+        expDate: '',
+        cvv: ''
   };
 
   getStepContent(step) {
@@ -67,7 +71,7 @@ class Register extends React.Component {
       case 0:
         return <BasicRegisterForm callbackFromParent={this.myCallback} />;
       case 1:
-        return <PaymentRegisterForm />;
+        return <PaymentRegisterForm callbackFromParent={this.myCallback}/>;
       case 2:
         return <TailorRegisterForm />;
       default:
@@ -84,13 +88,14 @@ class Register extends React.Component {
     }
   }
 
+
+  //change register to optional. require to click to the final state .
   handleNext = (e) => {
     // Authentication
-    if (this.state.activeStep === 0) {
+    if (this.state.activeStep === 2) {
       e.preventDefault();
       this.props.register(this.state);
     }
-    
     else {
       this.setState(state => ({
         activeStep: state.activeStep + 1,
@@ -112,9 +117,10 @@ class Register extends React.Component {
 
   // Get state from child (BasicRegisterForm)
   myCallback = (dataFromChild) => {
-    this.setState({
-      [dataFromChild.target.id]: dataFromChild.target.value
-    })
+      this.setState({
+        [dataFromChild.target.id]: dataFromChild.target.value
+      })
+    console.log(this.state.cards);
   };
 
   render() {

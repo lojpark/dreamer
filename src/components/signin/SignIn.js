@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 class SignIn extends Component {
     render(){
-        const { authSignInSuccess,authSignInError } = this.props;
+        const { authSignInSuccess } = this.props;
 
 
         return(
             <div>
-                {authSignInSuccess ?  <p>Success</p>  :  <BasicSignInForm authSignInError={authSignInError}/> }
+                {authSignInSuccess ?  <p>success</p>  :  <BasicSignInForm authSignInSuccess={authSignInSuccess}/> }
             </div>
         );
     };
@@ -20,7 +20,10 @@ class SignIn extends Component {
 const mapStateToProps= (state) =>{
     return {
         authSignInSuccess : state.auth.authSignInSuccess,
-        authSignInError : state.auth.authSignInError
+        authSignInError : state.auth.authSignInError,
+        firstName: state.auth.firstName,
+        lastName: state.auth.lastName,
+        cards : state.auth.cards
     }
 }
 

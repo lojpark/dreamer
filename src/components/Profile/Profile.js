@@ -17,6 +17,7 @@ class Profile extends React.Component {
   }
 
   editPaymentMethod(){
+    console.log("hello");
     this.setState({showEditPayment : true});
   }
 
@@ -91,32 +92,32 @@ class Profile extends React.Component {
         </div>
       </div>
     </div>);
-    var editPayment = (<div className="modal" tabIndex="-1" role="dialog">
-
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Modal title</h5>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="false">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>);
+    // var editPayment = (<div className="modal" tabIndex="-1" role="dialog">
+    //
+    //   <div className="modal-dialog" role="document">
+    //     <div className="modal-content">
+    //       <div className="modal-header">
+    //         <h5 className="modal-title">Modal title</h5>
+    //         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+    //           <span aria-hidden="false">&times;</span>
+    //         </button>
+    //       </div>
+    //       <div className="modal-body">
+    //         <p>Modal body text goes here.</p>
+    //       </div>
+    //       <div className="modal-footer">
+    //         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+    //         <button type="button" className="btn btn-primary">Save changes</button>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>);
     return (
         <div >
           {this.state.showEditPayment === true ? <PaymentRegisterForm/> : (<div/>)}
 
-          <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"/>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"/>
           <div className="bootstrapiso">
 
             <div className="container emp-profile">
@@ -141,14 +142,14 @@ class Profile extends React.Component {
                     <h6>
                       Web Developer and Designer
                     </h6>
-                    <p className="proile-rating"></p>
+                    <p className="proile-rating"/>
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                       <li className="nav-item">
-                        <a className="nav-link" id="profile-tab" data-toggle="tab" href="#home" role="tab"
+                        <a className="nav-link" id="profile-tab" data-toggle="tab"  role="tab"
                             onClick={this.changeTab}>About</a>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" id="payment-tab" data-toggle="tab" href="#profile" role="tab"
+                        <a className="nav-link" id="payment-tab" data-toggle="tab"  role="tab"
                             onClick={this.changeTab}>Payment methods</a>
                       </li>
                     </ul>
@@ -199,6 +200,6 @@ const mapStateToProps = (state) => {
     expDate : state.auth.expDate,
     cvv : state.auth.cvv
   }
-}
+};
 
 export default connect(mapStateToProps,null)(Profile);

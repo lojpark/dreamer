@@ -54,7 +54,7 @@ class BasicSignInForm extends Component {
         this.login = this.login.bind(this);
         this.state = {
             email:'',
-            password: ''
+            password: '',
         }
     }
 
@@ -71,13 +71,12 @@ class BasicSignInForm extends Component {
 
 
     render(){
-            const { authSignInError } = this.props;
+            const { authSignInSuccess } = this.props;
              const { classes} = this.props;
 
         return(
-
             <div>
-                {authSignInError ?  <AlertDialog/> : <div></div>}
+                {authSignInSuccess === false  ? <AlertDialog/>: <div/>  }
                 <main className={classes.main}>
                     <CssBaseline />
                     <Paper className={classes.paper}>

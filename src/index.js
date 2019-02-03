@@ -14,8 +14,13 @@ import firebaseConfig from './config/firebaseConfig'
 
 const theme = createMuiTheme({
     //override the theme here
+    palette: {
+        primary: {main: '#4497ec'
+        }
+    },
     typography: {
         useNextVariants: true,
+
     }
 });
 

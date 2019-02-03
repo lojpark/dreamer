@@ -1,5 +1,11 @@
 export const signout = () => {
-    return (dispatch) => {
-            dispatch({type: 'SIGN_OUT'})
+    return (dispatch,getState, {getFirebase}) => {
+        const firebase = getFirebase();
+        firebase.auth().signOut().then((u) => {
+        }).then(()=> {
+            dispatch({type: 'SIGNOUT_SUCCESS'})
+        }).catch((error) => {
+            dispatch({type: 'SIGNOUT_ERROR',error})
+        })
     }
 }

@@ -13,10 +13,16 @@ export const register = (newUser) => {
             ).then((response) => {
                 return firestore.collection('users').doc(response.user.uid).set({
                     firstName: newUser.firstName,
-                    lastName: newUser.lastName
+                    lastName: newUser.lastName,
+                    card: {
+                        cardName: newUser.cardName,
+                        cardNumber : newUser.cardNumber,
+                        expDate : newUser.expDate,
+                        cvv : newUser.cvv
+                    }
                 })
             }).then(() => {
-                dispatch({ type: 'REGISTER_SUCCESS' })
+                dispatch({ type: 'REGISTER_SUCCESS'})
             }).catch(error => {
                 dispatch({ type: 'REGISTER_ERROR', error })
         })}

@@ -12,6 +12,8 @@ import PaymentRegisterForm from './PaymentRegisterForm';
 import TailorRegisterForm from './TailorRegisterForm';
 import { connect } from 'react-redux';
 import { register } from '../../store/actions/authActions'
+import { changePayment } from '../../store/actions/ChangePaymentActions'
+
 import './Register.css'
 
 const styles = theme => ({
@@ -54,6 +56,9 @@ const steps = ['Basic information', 'Payment details', 'Tailor your experience']
 
 
 class Register extends React.Component {
+  firstStep = true;
+  secondStep = false;
+  thirdStep = false;
   state = {
     activeStep: 0,
     email: '',
@@ -81,20 +86,40 @@ class Register extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // Go next step when success register
-    if (nextProps.authSuccess) {
+    console.log("props.payment "+nextProps.paymentSuccess);
+
+    if (nextProps.authSuccess && this.firstStep) {
       this.setState(state => ({
         activeStep: state.activeStep + 1,
       }));
+
+      this.firstStep = false;
+      this.secondStep = true;
+    }
+
+    else if (nextProps.paymentSuccess && this.secondStep ) {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1,
+      }));
+      this.secondStep = false;
+      this.firstStep = false;
     }
   }
 
 
   //change register to optional. require to click to the final state .
   handleNext = (e) => {
+    console.log(this.firstStep + "  " + this.secondStep);
     // Authentication
-    if (this.state.activeStep === 2) {
+    if (this.state.activeStep === 0) {
+      console.log(this.state.activeStep);
       e.preventDefault();
       this.props.register(this.state);
+    }
+    else if( this.state.activeStep === 1){
+      console.log(this.state.activeStep);
+      const{uid} = this.props;
+      this.props.changePayment(this.state,uid);
     }
     else {
       this.setState(state => ({
@@ -119,7 +144,7 @@ class Register extends React.Component {
   myCallback = (dataFromChild) => {
       this.setState({
         [dataFromChild.target.id]: dataFromChild.target.value
-      })
+      });
     console.log(this.state.cards);
   };
 
@@ -190,13 +215,17 @@ Register.propTypes = {
 const mapStateToProps = (state) => {
   return {
     authSuccess: state.auth.authSuccess,
-    authError: state.auth.authError
+    authError: state.auth.authError,
+    uid : state.auth.uid,
+    paymentSuccess : state.auth.paymentSuccess,
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: (newUser) => dispatch(register(newUser))
+    register: (newUser) => dispatch(register(newUser)),
+    changePayment: (UserPayment,uid) => dispatch(changePayment(UserPayment,uid))
+
   }
 }
 

@@ -8,60 +8,53 @@ const initState = {
     firstName : null,
     lastName : null,
 
+    paymentSuccess : null,
+    authPaymentError : null,
     cardNumber : null,
     cardName : null,
     cvv : null,
     expDate : null,
+
+    uid : null
 }
 
 const authReducer = (state = initState, action) => {
      switch (action.type) {
-        case 'REGISTER_SUCCESS':
-            console.log('register success');
-            return {
-                ...state,
-                authSuccess: true,
-                authError: null
-            }
-        case 'NOT_SAME':
-            console.log('confirm password');
-            return {
-                ...state,
-                authSuccess: false,
-                authError: "Confirm Password not equal"
-            }
-        case 'REGISTER_ERROR':
-            console.log('register error', action.error.message);
-            return {
-                ...state,
-                authSuccess: false,
-                authError: action.error.message
-            }
-        case 'SIGNIN_SUCCESS':
-            console.log('sign in success');
+         case 'REGISTER_SUCCESS':
+             console.log('register success');
+             return {
+                 ...state,
+                 authSuccess: true,
+                 authError: null,
+                 uid: action.uid
 
-            if (typeof action.profile_info.card === 'undefined') {
-                return {
-                    ...state,
-                    authSignInSuccess: true,
-                    authSignInError: null,
-                    firstName : action.profile_info.firstName,
-                    lastName : action.profile_info.lastName,
-                }
-            }
-            else {
-                return {
-                    ...state,
-                    authSignInSuccess: true,
-                    authSignInError: null,
-                    firstName : action.profile_info.firstName,
-                    lastName : action.profile_info.lastName,
-                    cardName : action.profile_info.card.cardName,
-                    cardNumber : action.profile_info.card.cardNumber,
-                    cvv : action.profile_info.card.cvv,
-                    expDate : action.profile_info.card.expDate
-                }
-            }
+             }
+         case 'NOT_SAME':
+             console.log('confirm password');
+             return {
+                 ...state,
+                 authSuccess: false,
+                 authError: "Confirm Password not equal"
+             }
+         case 'REGISTER_ERROR':
+             console.log('register error', action.error.message);
+             return {
+                 ...state,
+                 authSuccess: false,
+                 authError: action.error.message
+             }
+         case 'SIGNIN_SUCCESS':
+             console.log('sign in success');
+             return {
+                 ...state,
+                 authSignInSuccess: true,
+                 authSignInError: null,
+                 firstName: action.profile_info.firstName,
+                 lastName: action.profile_info.lastName,
+                 uid: action.uid,
+             }
+
+
 
         case 'SIGNIN_ERROR':
             console.log('sign in error',action.error.message);
@@ -69,7 +62,6 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 authSignInSuccess: false,
                 authSignInError: action.error.message,
-
             }
         case 'SIGNOUT_SUCCESS':
              console.log('sign out success');
@@ -92,6 +84,18 @@ const authReducer = (state = initState, action) => {
                  authSignInError:action.error.message,
 
              }
+         case 'PAYMENT_SUCCESS':
+             return {
+                 ...state,
+                 paymentSuccess : true,
+                 cardName : action.payment_info.cardName,
+                 cardNumber : action.payment_info.cardNumber,
+                 cvv : action.payment_info.cvv,
+                 expDate : action.payment_info.expDate,
+             }
+         case 'PAYMENT_ERROR' :
+
+             console.log(action.error.message);
         default:
             return state;
     }

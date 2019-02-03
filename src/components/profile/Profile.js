@@ -17,7 +17,6 @@ class Profile extends React.Component {
   }
 
   editPaymentMethod(){
-    console.log("hello");
     this.setState({showEditPayment : true});
   }
 

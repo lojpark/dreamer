@@ -4,3 +4,10 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.title {
+    width: 100%;
+    font-size: 15pt;
+    margin-bottom: 1%;
+    padding: 4pt;
+}

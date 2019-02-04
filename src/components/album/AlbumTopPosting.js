@@ -29,6 +29,7 @@ class AlbumTopPosting extends React.Component {
     render() {
         return (
             <div className="posting">
+                <input type="text" className="title" value="Title"/>
                 <JoditEditor
                     editorRef={this.setRef}
                     value={this.state.content}

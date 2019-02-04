@@ -42,8 +42,8 @@ const Album = ({classes, cards, authSignInSuccess}) => {
     <React.Fragment>
       <CssBaseline />
       <main>
-        
         {authSignInSuccess ?  <AlbumTopPosting /> : <AlbumTop/>}
+        
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}
           <Grid container spacing={40}>

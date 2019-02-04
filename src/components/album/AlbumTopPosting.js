@@ -1,4 +1,5 @@
 import React from 'react';
+import './AlbumTopPosting.css'
 
 // Require Editor JS files.
 import 'froala-editor/js/froala_editor.pkgd.min.js';
@@ -14,7 +15,7 @@ import FroalaEditor from 'react-froala-wysiwyg';
 
 const AlbumTopPosting = () => {
     return (
-        <div>
+        <div className="posting">
             <FroalaEditor tag='textarea'/>
         </div>
     )

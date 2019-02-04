@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AlbumItem from './AlbumItem'
 import Footer from '../layout/Footer'
 import AlbumTop from './AlbumTop'
+import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
@@ -41,7 +42,7 @@ const Album = ({classes, cards}) => {
     <React.Fragment>
       <CssBaseline />
       <main>
-        <AlbumTop />
+        <AlbumTopPosting />
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}
           <Grid container spacing={40}>

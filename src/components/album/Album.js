@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AlbumItem from './AlbumItem'
 import Footer from '../layout/Footer'
 import AlbumTop from './AlbumTop'
+import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
@@ -35,13 +36,14 @@ const styles = theme => (
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const Album = ({classes, cards}) => {
+const Album = ({classes, cards, authSignInSuccess}) => {
   
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-        <AlbumTop />
+        {authSignInSuccess ?  <AlbumTopPosting /> : <AlbumTop/>}
+        
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}
           <Grid container spacing={40}>
@@ -67,6 +69,7 @@ const mapStateToProps = (state) => {
   console.log(state); 
   return {
     cards: state.album.card,
+    authSignInSuccess : state.auth.authSignInSuccess,
   }
 }
 

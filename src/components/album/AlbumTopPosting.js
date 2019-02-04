@@ -10,10 +10,14 @@ class AlbumTopPosting extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            title: '',
         	content: '',
         }
     }
 
+    updateTitle = (value) => {
+        this.setState({title:value})
+    }
     updateContent = (value) => {
         this.setState({content:value})
     }
@@ -29,7 +33,13 @@ class AlbumTopPosting extends React.Component {
     render() {
         return (
             <div className="posting">
-                <input type="text" className="title" value="Title"/>
+                <input
+                    type="text"
+                    className="title"
+                    placeholder="Title"
+                    value={this.state.title}
+                    onChange={e => this.updateTitle(e.target.value)}
+                />
                 <JoditEditor
                     editorRef={this.setRef}
                     value={this.state.content}

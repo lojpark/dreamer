@@ -1,10 +1,23 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import 'jodit';
 import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
 
 import './AlbumTopPosting.css'
+
+const styles = theme => ({
+    buttons: {
+        display: 'flex',
+        justifyContent: 'center',
+      },
+      button: {
+        marginTop: theme.spacing.unit,
+        marginLeft: theme.spacing.unit,
+      },
+  });
 
 class AlbumTopPosting extends React.Component {
     constructor(props) {
@@ -31,6 +44,7 @@ class AlbumTopPosting extends React.Component {
 		readonly: false // all options from https://xdsoft.net/jodit/doc/
 	}
     render() {
+        const { classes } = this.props;
         return (
             <div className="posting">
                 <input
@@ -46,9 +60,14 @@ class AlbumTopPosting extends React.Component {
                     config={this.config}
                     onChange={this.updateContent}
                 />
+                <div className={classes.buttons}>
+                    <Button className={classes.button} variant="contained" color="primary">
+                        Share your dream
+                    </Button>
+                </div>
             </div>
         );
     }
 }
 
-export default AlbumTopPosting
+export default withStyles(styles)(AlbumTopPosting)

@@ -1,24 +1,43 @@
 import React from 'react';
+
+import 'jodit';
+import 'jodit/build/jodit.min.css';
+import JoditEditor from "jodit-react";
+
 import './AlbumTopPosting.css'
 
-// Require Editor JS files.
-import 'froala-editor/js/froala_editor.pkgd.min.js';
+class AlbumTopPosting extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        	content: '',
+        }
+    }
 
-// Require Editor CSS files.
-import 'froala-editor/css/froala_style.min.css';
-import 'froala-editor/css/froala_editor.pkgd.min.css';
-
-// Require Font Awesome.
-import 'font-awesome/css/font-awesome.css';
-
-import FroalaEditor from 'react-froala-wysiwyg';
-
-const AlbumTopPosting = () => {
-    return (
-        <div className="posting">
-            <FroalaEditor tag='textarea'/>
-        </div>
-    )
+    updateContent = (value) => {
+        this.setState({content:value})
+    }
+    /**
+     * @property Jodit jodit instance of native Jodit
+     */
+	jodit;
+	setRef = jodit => this.jodit = jodit;
+	
+	config = {
+		readonly: false // all options from https://xdsoft.net/jodit/doc/
+	}
+    render() {
+        return (
+            <div className="posting">
+                <JoditEditor
+                    editorRef={this.setRef}
+                    value={this.state.content}
+                    config={this.config}
+                    onChange={this.updateContent}
+                />
+            </div>
+        );
+    }
 }
 
 export default AlbumTopPosting

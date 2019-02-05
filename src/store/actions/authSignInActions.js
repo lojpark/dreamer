@@ -6,8 +6,6 @@ export const signin = (User) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
 
-
-
         firebase.auth().signInWithEmailAndPassword(User.email,User.password).then((response) => {
             firestore.collection("users").doc(response.user.uid).get().then(function(doc){
                 if(doc.exists){

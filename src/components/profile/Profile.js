@@ -178,7 +178,6 @@ class Profile extends React.Component {
                   <div className="tab-content profile-tab" id="myTabContent">
 
                     {this.state.showProfile === true ? profile : payment}
-
                   </div>
                 </div>
               </div>

@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import BasicSignInForm from './BasicSignInForm';
 import { connect } from 'react-redux';
-
 class SignIn extends Component {
     render(){
         const { authSignInSuccess } = this.props;
@@ -9,7 +8,8 @@ class SignIn extends Component {
 
         return(
             <div>
-                {authSignInSuccess ?  <p>success</p>  :  <BasicSignInForm authSignInSuccess={authSignInSuccess}/> }
+                {authSignInSuccess ?  (<p>success</p>)
+                    :  <BasicSignInForm authSignInSuccess={authSignInSuccess}/> }
             </div>
         );
     };

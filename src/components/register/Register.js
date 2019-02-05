@@ -56,19 +56,16 @@ const steps = ['Basic information', 'Payment details', 'Tailor your experience']
 
 
 class Register extends React.Component {
-  firstStep = true;
-  secondStep = false;
-  thirdStep = false;
   state = {
     activeStep: 0,
     email: '',
     password: '',
     firstName: '',
     lastName: '',
-        cardName: '',
-        cardNumber: '',
-        expDate: '',
-        cvv: ''
+    cardName: '',
+    cardNumber: '',
+    expDate: '',
+    cvv: ''
   };
 
   getStepContent(step) {
@@ -88,38 +85,31 @@ class Register extends React.Component {
     // Go next step when success register
     console.log("props.payment "+nextProps.paymentSuccess);
 
-    if (nextProps.authSuccess && this.firstStep) {
+    if (nextProps.authSuccess ) {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1,
+      }));
+    }
+
+    else if (nextProps.paymentSuccess  ) {
       this.setState(state => ({
         activeStep: state.activeStep + 1,
       }));
 
-      this.firstStep = false;
-      this.secondStep = true;
     }
 
-    else if (nextProps.paymentSuccess && this.secondStep ) {
-      this.setState(state => ({
-        activeStep: state.activeStep + 1,
-      }));
-      this.secondStep = false;
-      this.firstStep = false;
-    }
   }
 
 
   //change register to optional. require to click to the final state .
   handleNext = (e) => {
-    console.log(this.firstStep + "  " + this.secondStep);
-    // Authentication
     if (this.state.activeStep === 0) {
-      console.log(this.state.activeStep);
       e.preventDefault();
       this.props.register(this.state);
     }
     else if( this.state.activeStep === 1){
-      console.log(this.state.activeStep);
-      const{uid} = this.props;
-      this.props.changePayment(this.state,uid);
+      e.preventDefault();
+      this.props.changePayment(this.state,this.props.uid);
     }
     else {
       this.setState(state => ({
@@ -225,8 +215,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     register: (newUser) => dispatch(register(newUser)),
     changePayment: (UserPayment,uid) => dispatch(changePayment(UserPayment,uid))
-
   }
-}
+};
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Register));

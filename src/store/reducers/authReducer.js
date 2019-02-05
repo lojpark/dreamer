@@ -2,6 +2,7 @@
 const initState = {
     authSuccess: null,
     authError: null,
+
     authSignInSuccess: null,
     authSignInError: null,
 
@@ -60,6 +61,7 @@ const authReducer = (state = initState, action) => {
             console.log('sign in error',action.error.message);
             return {
                 ...state,
+                paymentSuccess : null,
                 authSignInSuccess: false,
                 authSignInError: action.error.message,
             }
@@ -75,26 +77,26 @@ const authReducer = (state = initState, action) => {
                  cardName : null,
                  cvv : null,
                  expDate : null,
-             }
+                 uid : null
+             };
          case 'SIGNOUT_ERROR':
              console.log('sign out error',action.error.message);
              return {
                  ...state,
                  authSignInSuccess: null,
                  authSignInError:action.error.message,
-
-             }
+             };
          case 'PAYMENT_SUCCESS':
              return {
                  ...state,
                  paymentSuccess : true,
+                 authSuccess : null,
                  cardName : action.payment_info.cardName,
                  cardNumber : action.payment_info.cardNumber,
                  cvv : action.payment_info.cvv,
                  expDate : action.payment_info.expDate,
-             }
+             };
          case 'PAYMENT_ERROR' :
-
              console.log(action.error.message);
         default:
             return state;

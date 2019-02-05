@@ -24,15 +24,15 @@ const theme = createMuiTheme({
     }
 });
 
-
-function saveToLocalStorage(state){
+function saveToLocalStorage (state){
     try{
         const serializedState = JSON.stringify(state);
         localStorage.setItem('state',serializedState);
     }catch(e){
         console.log(e)
     }
-}
+};
+
 
 function loadFromLocalStorage(){
     try{
@@ -60,9 +60,10 @@ const store = createStore(
 store.subscribe(() => saveToLocalStorage(store.getState()));
 
 
+
 ReactDOM.render(
     <Provider store={store}>
-        <MuiThemeProvider theme={theme} >
+        <MuiThemeProvider theme={theme}  >
             <App />
         </MuiThemeProvider>
     </Provider>
@@ -72,3 +73,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+

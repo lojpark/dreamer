@@ -10,6 +10,7 @@ import AlbumTop from './AlbumTop'
 import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
 
 
 const styles = theme => (
@@ -66,14 +67,25 @@ Album.propTypes = {
 
 const mapStateToProps = (state) => {
   //this data is from rootReducer
-  console.log(state); 
-  return {
-    posts: state.post.posts,
-    authSignInSuccess : state.auth.authSignInSuccess,
+  if (state.firestore.ordered.posts) {
+    return {
+      posts: state.firestore.ordered.posts,
+      authSignInSuccess : state.auth.authSignInSuccess,
+    }
+  }
+  else
+  {
+    return {
+      posts: state.post.posts,
+      authSignInSuccess : state.auth.authSignInSuccess,
+    }
   }
 }
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps)
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'posts' }
+  ])
 )(Album);

@@ -34,6 +34,11 @@ class AlbumTopPosting extends React.Component {
     updateContent = (value) => {
         this.setState({content:value})
     }
+
+    handleSubmit = (e) => {
+        console.log(this.state.content);
+    };
+
     /**
      * @property Jodit jodit instance of native Jodit
      */
@@ -61,7 +66,7 @@ class AlbumTopPosting extends React.Component {
                     onChange={this.updateContent}
                 />
                 <div className={classes.buttons}>
-                    <Button className={classes.button} variant="contained" color="primary">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={this.handleSubmit}>
                         Share your dream
                     </Button>
                 </div>

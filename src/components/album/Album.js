@@ -42,7 +42,7 @@ const Album = ({classes, cards, authSignInSuccess}) => {
     <React.Fragment>
       <CssBaseline />
       <main>
-        {authSignInSuccess ?  <AlbumTopPosting /> : <AlbumTop/>}
+        {authSignInSuccess ?  <AlbumTopPosting /> : <AlbumTopPosting/>}
         
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}

@@ -2,6 +2,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import { connect } from 'react-redux';
+import { createPost } from '../../store/actions/postActions';
+
 import 'jodit';
 import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
@@ -36,7 +39,8 @@ class AlbumTopPosting extends React.Component {
     }
 
     handleSubmit = (e) => {
-        console.log(this.state.content);
+        e.preventDefault();
+        this.props.createPost(this.state);
     };
 
     /**
@@ -75,4 +79,10 @@ class AlbumTopPosting extends React.Component {
     }
 }
 
-export default withStyles(styles)(AlbumTopPosting)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createPost: (post) => dispatch(createPost(post))
+    }
+}
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(AlbumTopPosting))

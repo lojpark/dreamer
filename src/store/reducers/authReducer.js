@@ -88,8 +88,9 @@ const authReducer = (state = initState, action) => {
                 authSignInSuccess: null,
                 authSignInError:action.error.message
             }
+        default:
+            return state;
     }
-    return state;
 }
 
 export default authReducer;

@@ -36,20 +36,20 @@ const styles = theme => (
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const Album = ({classes, cards, authSignInSuccess}) => {
+const Album = ({classes, posts, authSignInSuccess}) => {
   
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-        {authSignInSuccess ?  <AlbumTopPosting /> : <AlbumTopPosting/>}
+        {authSignInSuccess ? <AlbumTopPosting /> : <AlbumTopPosting/>}
         
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}
           <Grid container spacing={40}>
-            {cards.map(card => {
+            {posts.map(post => {
               return (
-                <AlbumItem card={card} key={card}/> 
+                <AlbumItem card={post.id} post={post} key={post.id}/> 
               )
             })}
           </Grid>
@@ -65,10 +65,10 @@ Album.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  //this data is from rootReducer (albumReducer). 
+  //this data is from rootReducer
   console.log(state); 
   return {
-    cards: state.album.card,
+    posts: state.post.posts,
     authSignInSuccess : state.auth.authSignInSuccess,
   }
 }

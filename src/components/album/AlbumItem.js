@@ -23,9 +23,9 @@ const styles = theme => (
         },
     }
 )
-const AlbumItem = ({card, classes}) => {
+const AlbumItem = ({id, post, classes}) => {
     return (
-        <Grid item key={card} sm={6} md={4} lg={3}>
+        <Grid item key={id} sm={6} md={4} lg={3}>
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}
@@ -34,10 +34,10 @@ const AlbumItem = ({card, classes}) => {
                 />
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                        Heading
+                        {post.title}
                     </Typography>
                     <Typography>
-                        This is a media card. You can use this section to describe the content.
+                        {post.content}
                     </Typography>
                 </CardContent>
                 <CardActions>

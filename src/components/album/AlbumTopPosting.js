@@ -32,10 +32,10 @@ class AlbumTopPosting extends React.Component {
     }
 
     updateTitle = (value) => {
-        this.setState({title:value})
+        this.setState({ title: value })
     }
     updateContent = (value) => {
-        this.setState({content:value})
+        this.setState({ content: value })
     }
 
     handleSubmit = (e) => {

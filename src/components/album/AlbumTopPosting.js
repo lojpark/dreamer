@@ -2,6 +2,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+import { connect } from 'react-redux';
+import { createPost } from '../../store/actions/postActions';
+
 import 'jodit';
 import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
@@ -29,11 +32,21 @@ class AlbumTopPosting extends React.Component {
     }
 
     updateTitle = (value) => {
-        this.setState({title:value})
+        this.setState({ title: value })
     }
     updateContent = (value) => {
-        this.setState({content:value})
+        this.setState({ content: value })
     }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.createPost(this.state);
+        this.setState({
+            title: '',
+            content: ''
+        })
+    };
+
     /**
      * @property Jodit jodit instance of native Jodit
      */
@@ -61,7 +74,7 @@ class AlbumTopPosting extends React.Component {
                     onChange={this.updateContent}
                 />
                 <div className={classes.buttons}>
-                    <Button className={classes.button} variant="contained" color="primary">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={this.handleSubmit}>
                         Share your dream
                     </Button>
                 </div>
@@ -70,4 +83,10 @@ class AlbumTopPosting extends React.Component {
     }
 }
 
-export default withStyles(styles)(AlbumTopPosting)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createPost: (post) => dispatch(createPost(post))
+    }
+}
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(AlbumTopPosting))

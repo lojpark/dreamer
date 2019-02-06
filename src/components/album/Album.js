@@ -10,6 +10,7 @@ import AlbumTop from './AlbumTop'
 import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
 
 
 const styles = theme => (
@@ -36,20 +37,20 @@ const styles = theme => (
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const Album = ({classes, cards, authSignInSuccess}) => {
+const Album = ({classes, posts, authSignInSuccess}) => {
   
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-        {authSignInSuccess ?  <AlbumTopPosting /> : <AlbumTop/>}
+        {authSignInSuccess ? <AlbumTopPosting /> : <AlbumTop />}
         
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}
           <Grid container spacing={40}>
-            {cards.map(card => {
+            {posts.map(post => {
               return (
-                <AlbumItem card={card} key={card}/> 
+                <AlbumItem card={post.id} post={post} key={post.id}/> 
               )
             })}
           </Grid>
@@ -65,15 +66,26 @@ Album.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  //this data is from rootReducer (albumReducer). 
-  console.log(state); 
-  return {
-    cards: state.album.card,
-    authSignInSuccess : state.auth.authSignInSuccess,
+  //this data is from rootReducer
+  if (state.firestore.ordered.posts) {
+    return {
+      posts: state.firestore.ordered.posts,
+      authSignInSuccess : state.auth.authSignInSuccess,
+    }
+  }
+  else
+  {
+    return {
+      posts: state.post.posts,
+      authSignInSuccess : state.auth.authSignInSuccess,
+    }
   }
 }
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps)
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'posts' }
+  ])
 )(Album);

@@ -41,6 +41,10 @@ class AlbumTopPosting extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.createPost(this.state);
+        this.setState({
+            title: '',
+            content: ''
+        })
     };
 
     /**

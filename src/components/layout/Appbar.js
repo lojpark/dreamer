@@ -51,7 +51,6 @@ class Appbar extends React.Component {
 const mapStateToProps= (state) =>{
     return {
         authSignInSuccess : state.auth.authSignInSuccess,
-        // authSignInError : state.auth.authSignInError
     }
 }
 

@@ -37,7 +37,7 @@ const AlbumItem = ({id, post, classes}) => {
                         {post.title}
                     </Typography>
                     <Typography>
-                        {post.content}
+                        {post.thumbnailContent}
                     </Typography>
                 </CardContent>
                 <CardActions>

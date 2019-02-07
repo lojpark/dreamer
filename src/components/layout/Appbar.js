@@ -37,7 +37,7 @@ class Appbar extends React.Component {
                     <Toolbar>
                         <CameraIcon className={classes.icon}/>
                         <Typography variant="h6" color="inherit" noWrap  component={Link} to="/" style={{textDecoration: 'none'}}>
-                            Album layout
+                            Dreamer
                         </Typography>
                         <div className={classes.grow}/>
                         {authSignInSuccess ?  <SignedInLinks/> : <SignedOutLinks/>}

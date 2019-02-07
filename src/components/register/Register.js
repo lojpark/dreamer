@@ -60,10 +60,10 @@ class Register extends React.Component {
     password: '',
     firstName: '',
     lastName: '',
-        cardName: '',
-        cardNumber: '',
-        expDate: '',
-        cvv: ''
+    cardName: '',
+    cardNumber: '',
+    expDate: '',
+    cvv: ''
   };
 
   getStepContent(step) {

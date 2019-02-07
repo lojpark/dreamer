@@ -27,7 +27,9 @@ class AlbumTopPosting extends React.Component {
         super(props);
         this.state = {
             title: '',
-        	content: '',
+            content: '',
+            thumbnailImage: '',
+            thumbnailContent: '',
         }
     }
 
@@ -35,11 +37,15 @@ class AlbumTopPosting extends React.Component {
         this.setState({ title: value })
     }
     updateContent = (value) => {
-        this.setState({ content: value })
+        this.setState({
+            content: value,
+            thumbnailContent: this.jodit.getEditorText()
+        })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
+
         this.props.createPost(this.state);
         this.setState({
             title: '',

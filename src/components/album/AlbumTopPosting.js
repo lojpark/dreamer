@@ -27,7 +27,9 @@ class AlbumTopPosting extends React.Component {
         super(props);
         this.state = {
             title: '',
-        	content: '',
+            content: '',
+            thumbnailImage: '',
+            thumbnailContent: '',
         }
     }
 
@@ -35,11 +37,26 @@ class AlbumTopPosting extends React.Component {
         this.setState({ title: value })
     }
     updateContent = (value) => {
-        this.setState({ content: value })
+        this.setState({
+            content: value,
+            thumbnailContent: this.jodit.getEditorText()
+        })
+
+        var left = this.state.content.split('<img src="');
+        // If content contains image
+        if (left.length > 1) {
+            // Extract image
+            var image = left[1].split('"')[0];
+            
+            this.setState({
+                thumbnailImage: image,
+            })
+        }
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
+
         this.props.createPost(this.state);
         this.setState({
             title: '',

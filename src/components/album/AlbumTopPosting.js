@@ -41,6 +41,17 @@ class AlbumTopPosting extends React.Component {
             content: value,
             thumbnailContent: this.jodit.getEditorText()
         })
+
+        var left = this.state.content.split('<img src="');
+        // If content contains image
+        if (left.length > 1) {
+            // Extract image
+            var image = left[1].split('"')[0];
+        }
+
+        this.setState({
+            thumbnailImage: image,
+        })
     }
 
     handleSubmit = (e) => {

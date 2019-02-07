@@ -47,11 +47,11 @@ class AlbumTopPosting extends React.Component {
         if (left.length > 1) {
             // Extract image
             var image = left[1].split('"')[0];
+            
+            this.setState({
+                thumbnailImage: image,
+            })
         }
-
-        this.setState({
-            thumbnailImage: image,
-        })
     }
 
     handleSubmit = (e) => {

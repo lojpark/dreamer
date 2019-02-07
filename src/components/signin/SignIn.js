@@ -4,26 +4,19 @@ import { connect } from 'react-redux';
 
 class SignIn extends Component {
     render(){
-        const { authSignInSuccess } = this.props;
-
+        const { auth } = this.props;
 
         return(
             <div>
-                {authSignInSuccess ?  <p>success</p>  :  <BasicSignInForm authSignInSuccess={authSignInSuccess}/> }
+                {auth ?  <p>success</p>  :  <BasicSignInForm /> }
             </div>
         );
     };
-
-
 }
 
 const mapStateToProps= (state) =>{
     return {
-        authSignInSuccess : state.auth.authSignInSuccess,
-        authSignInError : state.auth.authSignInError,
-        firstName: state.auth.firstName,
-        lastName: state.auth.lastName,
-        cards : state.auth.cards
+        auth : state.firebase.auth,
     }
 }
 

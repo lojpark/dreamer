@@ -19,3 +19,11 @@
     font-size: 15px;
     font-weight: bold;
 }
+
+.red-text {
+    color:#FF0000;
+}
+
+.center {
+    text-align: center;
+}

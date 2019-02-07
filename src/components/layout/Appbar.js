@@ -30,7 +30,7 @@ class Appbar extends React.Component {
 
     }
     render(){
-        const { authSignInSuccess,classes } = this.props;
+        const { auth, classes } = this.props;
         return (
             <div>
                 <AppBar position="static" className={classes.appBar}>
@@ -40,7 +40,7 @@ class Appbar extends React.Component {
                             Dreamer
                         </Typography>
                         <div className={classes.grow}/>
-                        {authSignInSuccess ?  <SignedInLinks/> : <SignedOutLinks/>}
+                        {auth ?  <SignedInLinks/> : <SignedOutLinks/>}
                     </Toolbar>
                 </AppBar>
             </div>
@@ -50,7 +50,7 @@ class Appbar extends React.Component {
 
 const mapStateToProps= (state) =>{
     return {
-        authSignInSuccess : state.auth.authSignInSuccess,
+        auth : state.firebase.auth
     }
 }
 

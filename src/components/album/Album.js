@@ -37,13 +37,13 @@ const styles = theme => (
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const Album = ({classes, posts, authSignInSuccess}) => {
+const Album = ({classes, posts, auth}) => {
   
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-        {authSignInSuccess ? <AlbumTopPosting /> : <AlbumTop />}
+        {auth ? <AlbumTopPosting /> : <AlbumTop />}
         
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}
@@ -70,14 +70,14 @@ const mapStateToProps = (state) => {
   if (state.firestore.ordered.posts) {
     return {
       posts: state.firestore.ordered.posts,
-      authSignInSuccess : state.auth.authSignInSuccess,
+      auth : state.firebase.auth,
     }
   }
   else
   {
     return {
       posts: state.post.posts,
-      authSignInSuccess : state.auth.authSignInSuccess,
+      auth : state.firebase.auth,
     }
   }
 }

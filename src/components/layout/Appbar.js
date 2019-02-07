@@ -40,7 +40,7 @@ class Appbar extends React.Component {
                             Dreamer
                         </Typography>
                         <div className={classes.grow}/>
-                        {auth ?  <SignedInLinks/> : <SignedOutLinks/>}
+                        {auth.uid ?  <SignedInLinks/> : <SignedOutLinks/>}
                     </Toolbar>
                 </AppBar>
             </div>

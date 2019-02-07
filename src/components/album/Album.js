@@ -43,7 +43,7 @@ const Album = ({classes, posts, auth}) => {
     <React.Fragment>
       <CssBaseline />
       <main>
-        {auth ? <AlbumTopPosting /> : <AlbumTop />}
+        {auth.uid ? <AlbumTopPosting /> : <AlbumTop />}
         
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}

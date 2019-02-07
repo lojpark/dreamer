@@ -8,7 +8,7 @@ class SignIn extends Component {
 
         return(
             <div>
-                {auth ?  <p>success</p>  :  <BasicSignInForm /> }
+                {auth.uid ?  <p>success</p>  :  <BasicSignInForm /> }
             </div>
         );
     };

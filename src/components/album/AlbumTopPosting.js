@@ -15,11 +15,11 @@ const styles = theme => ({
     buttons: {
         display: 'flex',
         justifyContent: 'center',
-      },
-      button: {
+    },
+    button: {
         marginTop: theme.spacing.unit,
         marginLeft: theme.spacing.unit,
-      },
+    },
   });
 
 class AlbumTopPosting extends React.Component {

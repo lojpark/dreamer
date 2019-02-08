@@ -24,6 +24,7 @@ const styles = theme => ({
         minWidth: 72,
         fontWeight: theme.typography.fontWeightRegular,
         marginRight: theme.spacing.unit * 4,
+        paddingTop: '1rem',
         fontFamily: [
             '-apple-system',
             'BlinkMacSystemFont',
@@ -56,7 +57,7 @@ const styles = theme => ({
         width: 200,
     },
     button: {
-        margin: theme.spacing.unit * 3,
+        marginTop: theme.spacing.unit * 3,
     }
 });
 
@@ -66,6 +67,10 @@ class ProfileDetail extends Component {
         value: 0,
         firstName: "",
         lastName: "",
+        cardName: "",
+        cardNumber: "",
+        cvv: "",
+        expDate: "",
     }
     handleChangeTab = (e, value) => {
         this.setState({
@@ -93,7 +98,7 @@ class ProfileDetail extends Component {
                     id="firstName"
                     value={this.state.firstName}
                     onChange={this.handleChange}
-                    style={{margin: 10}}
+                    style={{ margin: 10 }}
                 />
 
                 <TextField
@@ -102,29 +107,79 @@ class ProfileDetail extends Component {
                     id="lastName"
                     value={this.state.lastName}
                     onChange={this.handleChange}
-                    style={{margin: 10}}
+                    style={{ margin: 10 }}
                 />
 
                 <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                 >
+                    style={{marginLeft: 10}}
+                >
                     Change
                 </Button>
             </React.Fragment>
         )
     }
-    componentDidMount = () => {
-        const { firstName, lastName} = this.props.user;
-        this.setState({
-            firstName, lastName
+    PaymentInfos = () => {
+        const { classes } = this.props;
+        const { card } = this.props.user;
+        let isComplete = true;
+        Object.keys(card).forEach(key => {
+            if (card[key] === "") isComplete = false;
         })
+
+        if (isComplete) { //paynmet form completed
+            return (
+                <React.Fragment>
+                    <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} card={this.props.user.card} />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        style={{ marginLeft: 'auto' }}
+                    >
+                        Update
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        style={{ marginLeft: 'auto' }}
+                    >
+                        Buy Coin
+                    </Button>
+                </React.Fragment>
+            )
+        }
+        else {
+            return (
+                <React.Fragment>
+                    <Typography variant="body1" color="secondary" gutterBottom>Payment method is not completed. Must be completed before charging coins</Typography>
+                    <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} card={this.props.user.card} />
+                    <div>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                        >
+                            Complete
+                    </Button>
+                    </div>
+                </React.Fragment>
+            )
+        }
+    }
+    componentDidMount = () => {
+        this.setState({
+            ...this.props.user
+        });
+
     }
     render() {
-        const { classes, user } = this.props;
+        const { classes } = this.props;
         const { value } = this.state;
-        
+
         return (
             <div className={classes.root}>
 
@@ -146,7 +201,7 @@ class ProfileDetail extends Component {
                 </Tabs>
                 <div className={classes.tabRoot}>
                     {value === 0 && <this.UserInfos />}
-                    {value === 1 && <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} />}
+                    {value === 1 && <this.PaymentInfos />}
                 </div>
 
             </div>

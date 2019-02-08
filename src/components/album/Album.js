@@ -61,6 +61,10 @@ class Album extends React.Component {
     });
   }
 
+  handleVote = () => {
+    // TODO
+  }
+
   render() {
     const { classes, posts, auth } = this.props;
     return (
@@ -98,10 +102,10 @@ class Album extends React.Component {
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
-                Cancel
+                Close
               </Button>
-              <Button onClick={this.handleClose} color="primary">
-                Subscribe
+              <Button onClick={this.handleVote} color="primary">
+                Vote
               </Button>
             </DialogActions>
           </Dialog>

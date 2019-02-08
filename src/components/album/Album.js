@@ -50,7 +50,7 @@ const Album = ({classes, posts, auth}) => {
           <Grid container spacing={40}>
             {posts.map(post => {
               return (
-                <AlbumItem card={post.id} post={post} key={post.id}/> 
+                <AlbumItem card={post.id} post={post} key={post.id}/>
               )
             })}
           </Grid>

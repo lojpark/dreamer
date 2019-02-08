@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 class BagicRegisterForm extends React.Component {
   handleChange = (e) => {
     this.props.callbackFromParent(e);
-  }
+  };
 
   render() {
     return (

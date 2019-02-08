@@ -23,7 +23,8 @@ const theme = createMuiTheme({
     }
 });
 
-const store = createStore(rootReducer,
+const store = createStore(
+    rootReducer,
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
         reduxFirestore(firebaseConfig),
@@ -31,9 +32,11 @@ const store = createStore(rootReducer,
     )
 );
 
+
+
 ReactDOM.render(
     <Provider store={store}>
-        <MuiThemeProvider theme={theme} >
+        <MuiThemeProvider theme={theme}  >
             <App />
         </MuiThemeProvider>
     </Provider>
@@ -43,3 +46,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+

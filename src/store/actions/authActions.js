@@ -4,7 +4,7 @@ export const register = (newUser) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         if(newUser.password !== newUser.pass_chk){
             dispatch({ type: 'NOT_SAME'})
-        }else{ 
+        }else{
             const firebase = getFirebase();
             const firestore = getFirestore();
             firebase.auth().createUserWithEmailAndPassword(
@@ -25,6 +25,6 @@ export const register = (newUser) => {
                 dispatch({ type: 'REGISTER_SUCCESS'})
             }).catch(error => {
                 dispatch({ type: 'REGISTER_ERROR', error })
-        })}
+            })}
     }
 }

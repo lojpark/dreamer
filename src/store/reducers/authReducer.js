@@ -1,12 +1,13 @@
-import {applyMiddleware as dispatch} from "redux";
 
 const initState = {
     authSuccess: null,
     authError: null,
-}
+    paymentChangeSuccess : null,
+    paymentChangeError : null,
+};
 
 const authReducer = (state = initState, action) => {
-     switch (action.type) {
+    switch (action.type) {
         case 'REGISTER_SUCCESS':
             console.log('register success');
             return {
@@ -28,7 +29,7 @@ const authReducer = (state = initState, action) => {
                 authSuccess: false,
                 authError: action.error.message
             }
-            
+
         case 'SIGNIN_SUCCESS':
             console.log('sign in success');
             return {
@@ -56,7 +57,20 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 authError: action.error.message,
             }
+        case 'PAYMENT_SUCCESS':
+            console.log('payment method change success');
+            return {
+                ...state,
+                paymentChangeSuccess: true,
 
+            }
+
+        case 'PAYMENT_ERROR':
+            console.log('payment method change error',action.error.message);
+            return {
+                ...state,
+                paymentChangeError: action.error.message,
+            }
         default:
             return state;
     }

@@ -27,5 +27,5 @@ const mapDispatchToProps = (dispatch) => {
     return {
         signout: () => dispatch(signout())
     }
-}
+};
 export default connect(null,mapDispatchToProps)(SignedInLinks)

@@ -2,7 +2,9 @@ import React from 'react';
 import "./Profile.css";
 import './css4.1/bootstrapcustom.min.css';
 import { connect } from 'react-redux';
-import PaymentRegisterForm from '../register/PaymentRegisterForm';
+import Button from "react-bootstrap/Button";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import PaymentDialog from "./editPaymentForm";
 
 class Profile extends React.Component {
 
@@ -11,6 +13,7 @@ class Profile extends React.Component {
     this.state = {
       showProfile : true,
       showEditPayment : false,
+
     };
     this.changeTab= this.changeTab.bind(this);
     this.editPaymentMethod = this.editPaymentMethod.bind(this);
@@ -19,6 +22,10 @@ class Profile extends React.Component {
   editPaymentMethod(){
     this.setState({showEditPayment : true});
   }
+
+  setShowEditPayment = bool =>{
+    this.setState({showEditPayment:bool});
+  };
 
   changeTab(e){
     if (e.target.id === "profile-tab") {
@@ -40,14 +47,6 @@ class Profile extends React.Component {
           <p>{userProfile.firstName} {userProfile.lastName}</p>
         </div>
       </div>
-      {/*<div className="row">*/}
-        {/*<div className="col-md-6">*/}
-          {/*<label>Email</label>*/}
-        {/*</div>*/}
-        {/*<div className="colPhone-md-6">*/}
-          {/*<p></p>*/}
-        {/*</div>*/}
-      {/*</div>*/}
       <div className="row">
         <div className="col-md-6">
           <label>Phone</label>
@@ -64,7 +63,7 @@ class Profile extends React.Component {
           <label>Card Name</label>
         </div>
         <div className="col-md-6">
-          <p>{userProfile.card.cardName ? userProfile.card.cardName : " "} </p>
+          <p>{userProfile.card ? userProfile.card.cardName : " "} </p>
         </div>
       </div>
       <div className="row">
@@ -72,7 +71,7 @@ class Profile extends React.Component {
           <label>Card number</label>
         </div>
         <div className="col-md-6">
-          <p> {userProfile.card.cardNumber ? userProfile.card.cardNumber : " "}</p>
+          <p> {userProfile.card ? userProfile.card.cardNumber : " "}</p>
         </div>
       </div>
       <div className="row">
@@ -80,7 +79,7 @@ class Profile extends React.Component {
           <label>Expirate Date</label>
         </div>
         <div className="col-md-6">
-          <p> {userProfile.card.expDate ? userProfile.card.expDate : " "}</p>
+          <p> {userProfile.card ? userProfile.card.expDate : " "}</p>
         </div>
       </div>
       <div className="row">
@@ -88,36 +87,28 @@ class Profile extends React.Component {
           <label>CVV</label>
         </div>
         <div className="col-md-6">
-          <p>{userProfile.card.cvv ? userProfile.card.cvv : " "} </p>
+          <p>{userProfile.card ? userProfile.card.cvv : " "} </p>
         </div>
       </div>
     </div>);
-    var editPayment = (<div className="modal" tabIndex="-1" role="dialog">
 
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Modal title</h5>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="false">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>);
     return (
         <div >
-          {this.state.showEditPayment === true ? <PaymentRegisterForm/> : (<div/>)}
+          <script src="https://unpkg.com/react/umd/react.production.js" crossOrigin/>
 
-          <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+          <script
+              src="https://unpkg.com/react-dom/umd/react-dom.production.js"
+              crossOrigin
+          />
+
+          <script
+              src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
+              crossOrigin
+          />
+
+          {this.state.showEditPayment ? <PaymentDialog setEditPayment={this.setShowEditPayment}/> : <div/>}
+
+          <script>var Alert = ReactBootstrap.Alert;</script>
           <div className="bootstrapiso">
 
             <div className="container emp-profile">
@@ -142,20 +133,29 @@ class Profile extends React.Component {
                     <h6>
                       Web Developer and Designer
                     </h6>
-                    <p className="proile-rating"></p>
+                    <p className="proile-rating"/>
                     <ul className="nav nav-tabs" id="myTab" role="tablist">
                       <li className="nav-item">
-                        <a className="nav-link" id="profile-tab" data-toggle="tab" href="#home" role="tab"
+                        <a className="nav-link" id="profile-tab" data-toggle="tab"  role="tab"
                             onClick={this.changeTab}>About</a>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" id="payment-tab" data-toggle="tab" href="#profile" role="tab"
+                        <a className="nav-link" id="payment-tab" data-toggle="tab"  role="tab"
                             onClick={this.changeTab}>Payment methods</a>
                       </li>
                     </ul>
                   </div>
                 </div>
                 <div className="col-md-2">
+                  <ButtonToolbar>
+                    <Button
+                        variant="primary"
+                        onClick={() => this.setState({ showEditPayment: true })}
+                    >
+                      Payment Method
+                    </Button>
+                  </ButtonToolbar>
+
 
                 </div>
               </div>
@@ -178,7 +178,6 @@ class Profile extends React.Component {
                   <div className="tab-content profile-tab" id="myTabContent">
 
                     {this.state.showProfile === true ? profile : payment}
-
                   </div>
                 </div>
               </div>
@@ -194,6 +193,6 @@ const mapStateToProps = (state) => {
   return {
     userProfile : state.firebase.profile,
   }
-}
+};
 
 export default connect(mapStateToProps,null)(Profile);

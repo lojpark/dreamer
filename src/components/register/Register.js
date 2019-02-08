@@ -15,7 +15,7 @@ import { register } from '../../store/actions/authActions'
 import './Register.css'
 
 const styles = theme => ({
-  
+
   layout: {
     width: 'auto',
     marginLeft: theme.spacing.unit * 2,
@@ -117,9 +117,9 @@ class Register extends React.Component {
 
   // Get state from child (BasicRegisterForm)
   myCallback = (dataFromChild) => {
-      this.setState({
-        [dataFromChild.target.id]: dataFromChild.target.value
-      })
+    this.setState({
+      [dataFromChild.target.id]: dataFromChild.target.value
+    })
     console.log(this.state.cards);
   };
 
@@ -128,57 +128,57 @@ class Register extends React.Component {
     const { activeStep } = this.state;
 
     return (
-      <React.Fragment>
-        
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h4" align="center">
-              Register
-            </Typography>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <React.Fragment>
-              {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography variant="h5" gutterBottom>
-                    Thank you for your register!
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Now you can post your dream which will be coming true.
-                  </Typography>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {this.getStepContent(activeStep)}
-                  <div className={classes.buttons}>
-                    {activeStep !== 0 && (
-                      <Button onClick={this.handleBack} className={classes.button}>
-                        Back
-                      </Button>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? 'Register' : 'Next'}
-                    </Button>
-                  </div>
-                </React.Fragment>
-              )}
-            </React.Fragment>
-            <div className="red-text center">
-              { authError ? <p>{ authError }</p> : null }
-            </div>
-          </Paper>
-        </main>
-      </React.Fragment>
+        <React.Fragment>
+
+          <main className={classes.layout}>
+            <Paper className={classes.paper}>
+              <Typography component="h1" variant="h4" align="center">
+                Register
+              </Typography>
+              <Stepper activeStep={activeStep} className={classes.stepper}>
+                {steps.map(label => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+              </Stepper>
+              <React.Fragment>
+                {activeStep === steps.length ? (
+                    <React.Fragment>
+                      <Typography variant="h5" gutterBottom>
+                        Thank you for your register!
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        Now you can post your dream which will be coming true.
+                      </Typography>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                      {this.getStepContent(activeStep)}
+                      <div className={classes.buttons}>
+                        {activeStep !== 0 && (
+                            <Button onClick={this.handleBack} className={classes.button}>
+                              Back
+                            </Button>
+                        )}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleNext}
+                            className={classes.button}
+                        >
+                          {activeStep === steps.length - 1 ? 'Register' : 'Next'}
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                )}
+              </React.Fragment>
+              <div className="red-text center">
+                { authError ? <p>{ authError }</p> : null }
+              </div>
+            </Paper>
+          </main>
+        </React.Fragment>
     );
   }
 }

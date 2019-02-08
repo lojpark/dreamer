@@ -1,5 +1,5 @@
 const initState = {
-    userResult: "",
+    userResult: null,
 }
 
 const userReducer = (state = initState, action) => {
@@ -39,6 +39,11 @@ const userReducer = (state = initState, action) => {
                 userResult: action.err.message
             }
 
+        case 'RESET_USER_RESULT':
+            return {
+                ...state,
+                userResult: null,
+            }
         default:
             return state;
     }

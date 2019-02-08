@@ -46,7 +46,7 @@ export const buyCoin = () => {
                 let coin = doc.data().coin;
                 if (coin === undefined) coin = 0;
                 coin++;
-                
+
                 console.log(coin); 
                 transaction.update(docRef, {coin});
                 return coin;
@@ -56,5 +56,11 @@ export const buyCoin = () => {
         }).catch(err => {
             dispatch({type: 'BUY_COIN_FAIL', err})
         })
+    }
+}
+
+export const resetUserResult = () => {
+    return (dispatch) => {
+        dispatch({type: 'RESET_USER_RESULT'});
     }
 }

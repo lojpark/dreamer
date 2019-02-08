@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { updateUserInfo, updatePaymentMethod, buyCoin } from '../../store/actions/userActions'
+import { updateUserInfo, updatePaymentMethod, buyCoin, resetUserResult } from '../../store/actions/userActions'
 
 const styles = theme => ({
     root: {
@@ -127,17 +127,23 @@ class ProfileDetail extends Component {
         )
     }
     PaymentInfos = () => {
-        const { classes } = this.props;
-        const { card } = this.props.user;
+        const { classes, user } = this.props;
+        const { card } = user;
+        
+        //check if payment is finished
         let isComplete = true;
         Object.keys(card).forEach(key => {
             if (card[key] === "") isComplete = false;
-        })
+        });
 
+        //check if user has coin
+        let coin = user.coin;
+        if (coin === undefined) coin = 0;
         if (isComplete) { //paynmet form completed
             return (
                 <React.Fragment>
                     <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} card={this.props.user.card} />
+                    <Typography variant="body1" >{"number of coins: " +  coin}</Typography>
                     <Button
                         variant="contained"
                         color="primary"
@@ -186,6 +192,7 @@ class ProfileDetail extends Component {
     componentWillReceiveProps = ({userResult}) => {
         if (userResult){
             alert(userResult);
+            this.props.resetUserResult();
         }
     }
 
@@ -232,6 +239,7 @@ const mapDispatchToProps = dispatch => {
         updateUserInfo: (user) => dispatch(updateUserInfo(user)),
         updatePaymentMethod: (user) => dispatch(updatePaymentMethod(user)),
         buyCoin: () => dispatch(buyCoin()),
+        resetUserResult: () => dispatch(resetUserResult()),
     }
 }
 export default compose(

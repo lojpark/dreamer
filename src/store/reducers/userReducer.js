@@ -1,5 +1,6 @@
 const initState = {
     userResult: null,
+    imageUploadResult: null,
 }
 
 const userReducer = (state = initState, action) => {
@@ -64,13 +65,17 @@ const userReducer = (state = initState, action) => {
                 userResult: action.err.message
             }
         case 'PROFILE_UPDATE_SUCCESS':
-            return state;
+            return {
+                ...state,
+                imageUploadResult: 'done',
+            };
 
         case 'PROFILE_UPDATE_FAIL':
             console.log(action.err.message);
             return {
                 ...state,
-                userResult: action.err.message
+                userResult: action.err.message,
+                imageUploadResult: 'done',
             }
         default:
             return state;

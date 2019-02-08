@@ -7,6 +7,7 @@ import EditCareer from './EditCareer'
 import { deleteCareer, uploadProfilePic } from '../../store/actions/userActions'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ({
     img: {
@@ -38,6 +39,7 @@ const basicProfileImg = "https://www.gravatar.com/avatar/05b6d7cc7c662bf81e01b39
 class ProfileCareer extends Component {
     state = {
         isEditing: false,
+        isUploading: false,
     }
     handleEdit = () => {
         this.setState({ isEditing: true });
@@ -48,15 +50,26 @@ class ProfileCareer extends Component {
     handleChangeProfile = (e) => {
         if (e.target.files.length > 0){
             this.props.uploadProfilePic(e.target.files[0]);
+            this.setState({isUploading: true})
         }
+    }
+    componentWillReceiveProps = ({imageUploadResult}) => {
+        if (imageUploadResult) this.setState({isUploading: false})
     }
     render() {
         const { classes, user } = this.props;
         return (
             <div className={classes.root}>
-                <img src={user.profile_url ? (user.profile_url) : (basicProfileImg)} alt="profile"
+                {this.state.isUploading ? (
+                    <div style={{textAlign: 'center'}}>
+                        <CircularProgress />
+                    </div>
+                ) : (
+                    <img src={user.profile_url ? (user.profile_url) : (basicProfileImg)} alt="profile"
                     className={classes.img}
                 />
+                )}
+
 
                 <Button variant="contained" color="primary" component="label" fullWidth={true}>
                     Change profile
@@ -97,6 +110,11 @@ class ProfileCareer extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        imageUploadResult: state.user.imageUploadResult,
+    }
+}
 const mapDispatchToProps = dispatch => {
     return {
         deleteCareer: (idx) => dispatch(deleteCareer(idx)),
@@ -105,5 +123,5 @@ const mapDispatchToProps = dispatch => {
 }
 export default compose(
     withStyles(styles),
-    connect(null, mapDispatchToProps),
+    connect(mapStateToProps, mapDispatchToProps),
 )(ProfileCareer)

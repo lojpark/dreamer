@@ -192,7 +192,7 @@ class ProfileDetail extends Component {
     componentWillReceiveProps = ({userResult}) => {
         if (userResult){
             alert(userResult);
-            this.props.resetUserResult();
+            this.props.resetUserResult(); //reset so alert does not show up twice
         }
     }
 

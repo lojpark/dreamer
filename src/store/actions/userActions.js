@@ -64,3 +64,44 @@ export const resetUserResult = () => {
         dispatch({type: 'RESET_USER_RESULT'});
     }
 }
+
+export const addCareer = (career) => {
+    return (dispatch, getState, {getFirestore}) => {
+        const user = getState().firestore.ordered.users[0];
+        const firestore = getFirestore();
+        
+        let careers = user.careers.map(item => {
+            return item
+        });
+        if (user.careers === undefined) careers = [];
+        
+        console.log(careers, career);
+        careers.push(career);
+        firestore.collection('users').doc(user.id).update({
+            careers
+        }).then(() => {
+            dispatch({type: 'USER_CAREER_ADD_SUCCESS'});
+        }).catch(err => {
+            dispatch({type: 'USER_CAREER_ADD_FAIL', err});
+        })
+    }
+}
+
+export const deleteCareer = (target_idx) => {
+    return (dispatch, getState, {getFirestore}) => {
+        const user = getState().firestore.ordered.users[0];
+        const firestore = getFirestore();
+
+        //assume there is at least one career added to user
+        let careers = user.careers.filter((career, idx) => {
+            return idx !== target_idx
+        });
+        firestore.collection('users').doc(user.id).update({
+            careers
+        }).then(() => {
+            dispatch({type: 'USER_CAREER_REMOVE_SUCCESS'});
+        }).catch(err => {
+            dispatch({type: 'USER_CAREER_REMOVE_FAIL', err});
+        })
+    }
+}

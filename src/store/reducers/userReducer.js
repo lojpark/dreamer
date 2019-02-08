@@ -44,6 +44,25 @@ const userReducer = (state = initState, action) => {
                 ...state,
                 userResult: null,
             }
+
+        case 'USER_CAREER_ADD_SUCCESS':
+            return state;
+
+        case 'USER_CAREER_ADD_FAIL':
+            return {
+                ...state,
+                userResult: action.err.message,
+            }
+
+        case 'USER_CAREER_REMOVE_SUCCESS':
+            return state;
+        
+        case 'USER_CAREER_REMOVE_FAIL':
+            console.log(action.err.message);
+            return {
+                ...state,
+                userResult: action.err.message
+            }
         default:
             return state;
     }

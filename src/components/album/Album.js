@@ -7,8 +7,10 @@ import { withStyles } from '@material-ui/core/styles';
 import AlbumItem from './AlbumItem'
 import Footer from '../layout/Footer'
 import AlbumTop from './AlbumTop'
+import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
 
 
 const styles = theme => (
@@ -35,19 +37,20 @@ const styles = theme => (
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const Album = ({classes, cards}) => {
+const Album = ({classes, posts, auth}) => {
   
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-        <AlbumTop />
+        {auth.uid ? <AlbumTopPosting /> : <AlbumTop />}
+        
         <div className={classNames(classes.layout, classes.cardGrid)}>
           {/* End hero unit */}
           <Grid container spacing={40}>
-            {cards.map(card => {
+            {posts.map(post => {
               return (
-                <AlbumItem card={card} key={card}/> 
+                <AlbumItem card={post.id} post={post} key={post.id}/> 
               )
             })}
           </Grid>
@@ -63,14 +66,26 @@ Album.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  //this data is from rootReducer (albumReducer). 
-  console.log(state); 
-  return {
-    cards: state.album.card,
+  //this data is from rootReducer
+  if (state.firestore.ordered.posts) {
+    return {
+      posts: state.firestore.ordered.posts,
+      auth : state.firebase.auth,
+    }
+  }
+  else
+  {
+    return {
+      posts: state.post.posts,
+      auth : state.firebase.auth,
+    }
   }
 }
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps)
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'posts' }
+  ])
 )(Album);

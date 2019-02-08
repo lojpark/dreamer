@@ -14,7 +14,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import AlertDialog from "./PopUpMessageLoginFail";
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -61,22 +60,17 @@ class BasicSignInForm extends Component {
     login(e){
         e.preventDefault();
         this.props.signin(this.state);
-
     }
     handleChange(event){
         console.log(event);
         this.setState({[event.target.name]: event.target.value});
-
     }
 
-
     render(){
-            const { authSignInSuccess } = this.props;
-             const { classes} = this.props;
+        const { classes, authError } = this.props;
 
         return(
             <div>
-                {authSignInSuccess === false  ? <AlertDialog/>: <div/>  }
                 <main className={classes.main}>
                     <CssBaseline />
                     <Paper className={classes.paper}>
@@ -109,10 +103,19 @@ class BasicSignInForm extends Component {
                                 Sign in
                             </Button>
                         </form>
+                        <div className="red-text center">
+                            { authError ? <p>{ authError }</p> : null }
+                        </div>
                     </Paper>
                 </main>
             </div>
         );
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        authError: state.auth.authError
     }
 }
 
@@ -122,4 +125,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default withStyles(styles)(connect(null,mapDispatchToProps)(BasicSignInForm));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(BasicSignInForm));

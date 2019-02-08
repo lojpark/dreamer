@@ -1,13 +1,10 @@
 
-export const changePayment = (UserPayment,uid) => {
-    console.log("@@@@"+uid);
-    console.log("check");
+export const changePayment = (UserPayment) => {
 
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-        console.log("check");
-
+        const firebase = getFirebase();
         const firestore = getFirestore();
-            firestore.collection('users').doc(uid).set({
+            firestore.collection('users').doc(firebase.auth().currentUser.uid).set({
             card: {
                 cardName: UserPayment.cardName,
                 cardNumber : UserPayment.cardNumber,

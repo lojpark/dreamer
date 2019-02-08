@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Button from "react-bootstrap/Button";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import PaymentDialog from "./editPaymentForm";
-import AlertDialog from "../signin/PopUpMessageLoginFail";
 
 class Profile extends React.Component {
 
@@ -36,15 +35,16 @@ class Profile extends React.Component {
       this.setState({showProfile:false})
     }
   }
+
   render(){
-    const {lastName,firstName,cardName,cardNumber,cvv,expDate} = this.props;
+    const { userProfile } = this.props;
     var profile = (<div className="tab-pane fade show active" id="home" role="tabpanel">
       <div className="row">
         <div className="col-md-6">
           <label>Name</label>
         </div>
         <div className="col-md-6">
-          <p>{lastName} {firstName}</p>
+          <p>{userProfile.firstName} {userProfile.lastName}</p>
         </div>
       </div>
       <div className="row">
@@ -63,7 +63,7 @@ class Profile extends React.Component {
           <label>Card Name</label>
         </div>
         <div className="col-md-6">
-          <p>{cardName ? cardName : " "} </p>
+          <p>{userProfile.card ? userProfile.card.cardName : " "} </p>
         </div>
       </div>
       <div className="row">
@@ -71,7 +71,7 @@ class Profile extends React.Component {
           <label>Card number</label>
         </div>
         <div className="col-md-6">
-          <p> {cardNumber ? cardNumber : " "}</p>
+          <p> {userProfile.card ? userProfile.card.cardNumber : " "}</p>
         </div>
       </div>
       <div className="row">
@@ -79,7 +79,7 @@ class Profile extends React.Component {
           <label>Expirate Date</label>
         </div>
         <div className="col-md-6">
-          <p> {expDate ? expDate : " "}</p>
+          <p> {userProfile.card ? userProfile.card.expDate : " "}</p>
         </div>
       </div>
       <div className="row">
@@ -87,7 +87,7 @@ class Profile extends React.Component {
           <label>CVV</label>
         </div>
         <div className="col-md-6">
-          <p>{cvv ? cvv : " "} </p>
+          <p>{userProfile.card ? userProfile.card.cvv : " "} </p>
         </div>
       </div>
     </div>);
@@ -128,7 +128,7 @@ class Profile extends React.Component {
                 <div className="col-md-6">
                   <div className="profile-head">
                     <h5>
-                      {firstName} {lastName}
+                      {userProfile.firstName} {userProfile.lastName}
                     </h5>
                     <h6>
                       Web Developer and Designer
@@ -191,13 +191,7 @@ class Profile extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    email : state.auth.email,
-    firstName: state.auth.firstName,
-    lastName: state.auth.lastName,
-    cardName : state.auth.cardName,
-    cardNumber : state.auth.cardNumber,
-    expDate : state.auth.expDate,
-    cvv : state.auth.cvv
+    userProfile : state.firebase.profile,
   }
 };
 

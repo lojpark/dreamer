@@ -14,8 +14,7 @@ class SignedInLinks extends React.Component {
     render(){
         return (
             <div>
-                <Button color="inherit">Write your story</Button>
-                <Button color="inherit">View stories</Button>
+                <Button color="inherit">My stories</Button>
                 <Button color="inherit" component={Link} to="/profile">Profile</Button>
                 <Button color="inherit" onClick={this.deleteSignInInfo}>Sign out</Button>
             </div>

@@ -12,12 +12,10 @@ import PaymentRegisterForm from './PaymentRegisterForm';
 import TailorRegisterForm from './TailorRegisterForm';
 import { connect } from 'react-redux';
 import { register } from '../../store/actions/authActions'
-import { changePayment } from '../../store/actions/ChangePaymentActions'
-
 import './Register.css'
 
 const styles = theme => ({
-  
+
   layout: {
     width: 'auto',
     marginLeft: theme.spacing.unit * 2,
@@ -83,33 +81,20 @@ class Register extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // Go next step when success register
-    console.log("props.payment "+nextProps.paymentSuccess);
-
-    if (nextProps.authSuccess ) {
+    if (nextProps.authSuccess) {
       this.setState(state => ({
         activeStep: state.activeStep + 1,
       }));
     }
-
-    else if (nextProps.paymentSuccess  ) {
-      this.setState(state => ({
-        activeStep: state.activeStep + 1,
-      }));
-
-    }
-
   }
 
 
   //change register to optional. require to click to the final state .
   handleNext = (e) => {
-    if (this.state.activeStep === 0) {
+    // Authentication
+    if (this.state.activeStep === 2) {
       e.preventDefault();
       this.props.register(this.state);
-    }
-    else if( this.state.activeStep === 1){
-      e.preventDefault();
-      this.props.changePayment(this.state,this.props.uid);
     }
     else {
       this.setState(state => ({
@@ -132,9 +117,9 @@ class Register extends React.Component {
 
   // Get state from child (BasicRegisterForm)
   myCallback = (dataFromChild) => {
-      this.setState({
-        [dataFromChild.target.id]: dataFromChild.target.value
-      });
+    this.setState({
+      [dataFromChild.target.id]: dataFromChild.target.value
+    })
     console.log(this.state.cards);
   };
 
@@ -143,57 +128,57 @@ class Register extends React.Component {
     const { activeStep } = this.state;
 
     return (
-      <React.Fragment>
-        
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h4" align="center">
-              Register
-            </Typography>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <React.Fragment>
-              {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography variant="h5" gutterBottom>
-                    Thank you for your register!
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Now you can post your dream which will be coming true.
-                  </Typography>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {this.getStepContent(activeStep)}
-                  <div className={classes.buttons}>
-                    {activeStep !== 0 && (
-                      <Button onClick={this.handleBack} className={classes.button}>
-                        Back
-                      </Button>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? 'Register' : 'Next'}
-                    </Button>
-                  </div>
-                </React.Fragment>
-              )}
-            </React.Fragment>
-            <div className="red-text center">
-              { authError ? <p>{ authError }</p> : null }
-            </div>
-          </Paper>
-        </main>
-      </React.Fragment>
+        <React.Fragment>
+
+          <main className={classes.layout}>
+            <Paper className={classes.paper}>
+              <Typography component="h1" variant="h4" align="center">
+                Register
+              </Typography>
+              <Stepper activeStep={activeStep} className={classes.stepper}>
+                {steps.map(label => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+              </Stepper>
+              <React.Fragment>
+                {activeStep === steps.length ? (
+                    <React.Fragment>
+                      <Typography variant="h5" gutterBottom>
+                        Thank you for your register!
+                      </Typography>
+                      <Typography variant="subtitle1">
+                        Now you can post your dream which will be coming true.
+                      </Typography>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                      {this.getStepContent(activeStep)}
+                      <div className={classes.buttons}>
+                        {activeStep !== 0 && (
+                            <Button onClick={this.handleBack} className={classes.button}>
+                              Back
+                            </Button>
+                        )}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleNext}
+                            className={classes.button}
+                        >
+                          {activeStep === steps.length - 1 ? 'Register' : 'Next'}
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                )}
+              </React.Fragment>
+              <div className="red-text center">
+                { authError ? <p>{ authError }</p> : null }
+              </div>
+            </Paper>
+          </main>
+        </React.Fragment>
     );
   }
 }
@@ -205,17 +190,14 @@ Register.propTypes = {
 const mapStateToProps = (state) => {
   return {
     authSuccess: state.auth.authSuccess,
-    authError: state.auth.authError,
-    uid : state.auth.uid,
-    paymentSuccess : state.auth.paymentSuccess,
+    authError: state.auth.authError
   }
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: (newUser) => dispatch(register(newUser)),
-    changePayment: (UserPayment,uid) => dispatch(changePayment(UserPayment,uid))
+    register: (newUser) => dispatch(register(newUser))
   }
-};
+}
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Register));

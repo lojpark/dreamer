@@ -30,17 +30,17 @@ class Appbar extends React.Component {
 
     }
     render(){
-        const { authSignInSuccess,classes } = this.props;
+        const { auth, classes } = this.props;
         return (
             <div>
                 <AppBar position="static" className={classes.appBar}>
                     <Toolbar>
                         <CameraIcon className={classes.icon}/>
                         <Typography variant="h6" color="inherit" noWrap  component={Link} to="/" style={{textDecoration: 'none'}}>
-                            Album layout
+                            Dreamer
                         </Typography>
                         <div className={classes.grow}/>
-                        {authSignInSuccess ?  <SignedInLinks/> : <SignedOutLinks/>}
+                        {auth.uid ?  <SignedInLinks/> : <SignedOutLinks/>}
                     </Toolbar>
                 </AppBar>
             </div>
@@ -50,8 +50,7 @@ class Appbar extends React.Component {
 
 const mapStateToProps= (state) =>{
     return {
-        authSignInSuccess : state.auth.authSignInSuccess,
-        // authSignInError : state.auth.authSignInError
+        auth : state.firebase.auth
     }
 }
 

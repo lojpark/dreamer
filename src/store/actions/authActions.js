@@ -1,6 +1,6 @@
+import { actionTypes } from "react-redux-firebase";
 
 export const register = (newUser) => {
-    var uid ;
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         if(newUser.password !== newUser.pass_chk){
             dispatch({ type: 'NOT_SAME'})
@@ -11,16 +11,20 @@ export const register = (newUser) => {
                 newUser.email,
                 newUser.password
             ).then((response) => {
-                uid = response.user.uid;
                 return firestore.collection('users').doc(response.user.uid).set({
                     firstName: newUser.firstName,
                     lastName: newUser.lastName,
-
+                    card: {
+                        cardName: newUser.cardName,
+                        cardNumber : newUser.cardNumber,
+                        expDate : newUser.expDate,
+                        cvv : newUser.cvv
+                    }
                 })
             }).then(() => {
-                dispatch({ type: 'REGISTER_SUCCESS',uid})
+                dispatch({ type: 'REGISTER_SUCCESS'})
             }).catch(error => {
                 dispatch({ type: 'REGISTER_ERROR', error })
-        })}
+            })}
     }
 }

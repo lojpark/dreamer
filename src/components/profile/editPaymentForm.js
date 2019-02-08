@@ -16,10 +16,10 @@ class PaymentDialog extends React.Component {
         this.state = {
             open : true ,
             setOpen : false ,
-                cardName : '',
-                cardNumber : '',
-                expDate : '',
-                cvv : ''
+            cardName : '',
+            cardNumber : '',
+            expDate : '',
+            cvv : ''
         };
 
     }
@@ -31,8 +31,7 @@ class PaymentDialog extends React.Component {
     };
 
     changeMethod = () => {
-        this.props.changePayment(this.state,this.props.uid);
-
+        this.props.changePayment(this.state);
     };
 
     handleChange = (e) =>{
@@ -89,15 +88,10 @@ class PaymentDialog extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        uid : state.auth.uid
-    }
-};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changePayment: (UserPayment,uid) => dispatch(changePayment(UserPayment,uid))
+        changePayment: (UserPayment) => dispatch(changePayment(UserPayment))
     }
 };
-export default connect(mapStateToProps,mapDispatchToProps)(PaymentDialog);
+export default connect(null,mapDispatchToProps)(PaymentDialog);

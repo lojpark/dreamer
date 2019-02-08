@@ -71,7 +71,7 @@ class Register extends React.Component {
       case 0:
         return <BasicRegisterForm callbackFromParent={this.myCallback} />;
       case 1:
-        return <PaymentRegisterForm callbackFromParent={this.myCallback}/>;
+        return <PaymentRegisterForm callbackFromParent={this.myCallback} card={this.state}/>;
       case 2:
         return <TailorRegisterForm />;
       default:

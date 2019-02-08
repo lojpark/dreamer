@@ -71,10 +71,14 @@ class ProfileDetail extends Component {
         value: 0,
         firstName: "",
         lastName: "",
-        cardName: "",
-        cardNumber: "",
-        cvv: "",
-        expDate: "",
+        careers: [],
+        coin: 0, 
+        card: {
+            cardName: "",
+            cardNumber: "",
+            cvv: "",
+            expDate: "",
+        }
     }
     handleChangeTab = (e, value) => {
         this.setState({
@@ -82,8 +86,15 @@ class ProfileDetail extends Component {
         })
     }
     handlePaymentInfo = (e) => {
+
         this.setState({
-            [e.target.id]: e.target.value,
+            ...this.state,
+            card: {
+                ...this.state.card,
+                [e.target.id]: e.target.value,
+            }
+        }, () => {
+            console.log(this.state);
         })
     }
     handleChange = (e) => {
@@ -118,7 +129,7 @@ class ProfileDetail extends Component {
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    style={{marginLeft: 10}}
+                    style={{ marginLeft: 10 }}
                     onClick={() => this.props.updateUserInfo(this.state)}
                 >
                     Update
@@ -127,9 +138,9 @@ class ProfileDetail extends Component {
         )
     }
     PaymentInfos = () => {
-        const { classes, user } = this.props;
-        const { card } = user;
-        
+        const { classes } = this.props;
+        const { card } = this.props.user;
+
         //check if payment is finished
         let isComplete = true;
         Object.keys(card).forEach(key => {
@@ -137,18 +148,18 @@ class ProfileDetail extends Component {
         });
 
         //check if user has coin
-        let coin = user.coin;
+        let coin = this.state.coin;
         if (coin === undefined) coin = 0;
         if (isComplete) { //paynmet form completed
             return (
                 <React.Fragment>
-                    <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} card={this.props.user.card} />
-                    <Typography variant="body1" >{"number of coins: " +  coin}</Typography>
+                    <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} card={this.state.card} />
+                    <Typography variant="body1" >{"number of coins: " + coin}</Typography>
                     <Button
                         variant="contained"
                         color="primary"
                         className={classes.button}
-                        onClick={() => this.props.updatePaymentMethod(this.state)}
+                        onClick={() => this.props.updatePaymentMethod(this.state.card)}
                     >
                         Update
                     </Button>
@@ -168,13 +179,13 @@ class ProfileDetail extends Component {
             return (
                 <React.Fragment>
                     <Typography variant="body1" color="secondary" gutterBottom>Payment method is not completed. Must be completed before charging coins</Typography>
-                    <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} card={this.props.user.card} />
+                    <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} card={this.state.card} />
                     <div>
                         <Button
                             variant="contained"
                             color="primary"
                             className={classes.button}
-                            onClick={() => this.props.updatePaymentMethod(this.state)}
+                            onClick={() => this.props.updatePaymentMethod(this.state.card)}
                         >
                             Complete
                     </Button>
@@ -184,13 +195,14 @@ class ProfileDetail extends Component {
         }
     }
     componentDidMount = () => {
+
         this.setState({
             ...this.props.user
         });
 
     }
-    componentWillReceiveProps = ({userResult}) => {
-        if (userResult){
+    componentWillReceiveProps = ({ userResult }) => {
+        if (userResult) {
             alert(userResult);
             this.props.resetUserResult(); //reset so alert does not show up twice
         }
@@ -199,7 +211,7 @@ class ProfileDetail extends Component {
     render() {
         const { classes } = this.props;
         const { value } = this.state;
-
+        console.log(this.state);
         return (
             <div className={classes.root}>
 

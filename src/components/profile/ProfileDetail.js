@@ -4,6 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import PaymentRegisterForm from '../register/PaymentRegisterForm'
+import TextField from '@material-ui/core/TextField'
 
 const styles = theme => ({
     root: {
@@ -50,7 +51,13 @@ const styles = theme => ({
     typography: {
         padding: theme.spacing.unit * 3,
     },
+    tabRoot: {
+        paddingTop: theme.spacing.unit * 3,
+        width: '80%',
+        margin: 'auto',
+    }
 });
+
 
 class ProfileDetail extends Component {
     state = {
@@ -60,6 +67,19 @@ class ProfileDetail extends Component {
         this.setState({
             value
         })
+    }
+    handlePaymentInfo = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value,
+        })
+    }
+    UserInfos = () => {
+        return (
+            <React.Fragment>
+                <TextField fullWidth={true}/>
+                <TextField fullWidth={true}/>
+            </React.Fragment>
+        )
     }
     render() {
         const { classes } = this.props;
@@ -83,11 +103,10 @@ class ProfileDetail extends Component {
                         label="Payment"
                     />
                 </Tabs>
-                {value === 1 &&
-                    <div style={{ width: '80%', textAlign: 'center'}}>
-                        <PaymentRegisterForm />
-                    </div>
-                }
+                <div className={classes.tabRoot}>
+                    {value === 0 && <this.UserInfos />}
+                    {value === 1 && <PaymentRegisterForm callbackFromParent={this.handlePaymentInfo} />}
+                </div>
 
             </div>
         )

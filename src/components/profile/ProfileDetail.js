@@ -6,6 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import PaymentRegisterForm from '../register/PaymentRegisterForm'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { updateUserInfo, updatePaymentMethod } from '../../store/actions/userActions'
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -115,8 +119,9 @@ class ProfileDetail extends Component {
                     color="primary"
                     className={classes.button}
                     style={{marginLeft: 10}}
+                    onClick={() => this.props.updateUserInfo(this.state)}
                 >
-                    Change
+                    Update
                 </Button>
             </React.Fragment>
         )
@@ -137,7 +142,7 @@ class ProfileDetail extends Component {
                         variant="contained"
                         color="primary"
                         className={classes.button}
-                        style={{ marginLeft: 'auto' }}
+                        onClick={() => this.props.updatePaymentMethod(this.state)}
                     >
                         Update
                     </Button>
@@ -145,7 +150,7 @@ class ProfileDetail extends Component {
                         variant="contained"
                         color="primary"
                         className={classes.button}
-                        style={{ marginLeft: 'auto' }}
+                        style={{ marginLeft: 10 }}
                     >
                         Buy Coin
                     </Button>
@@ -162,6 +167,7 @@ class ProfileDetail extends Component {
                             variant="contained"
                             color="primary"
                             className={classes.button}
+                            onClick={() => this.props.updatePaymentMethod(this.state)}
                         >
                             Complete
                     </Button>
@@ -176,6 +182,12 @@ class ProfileDetail extends Component {
         });
 
     }
+    componentWillReceiveProps = ({userResult}) => {
+        if (userResult){
+            alert(userResult);
+        }
+    }
+
     render() {
         const { classes } = this.props;
         const { value } = this.state;
@@ -208,4 +220,19 @@ class ProfileDetail extends Component {
         )
     }
 }
-export default withStyles(styles)(ProfileDetail)
+const mapStateToProps = state => {
+    return {
+        userResult: state.user.userResult,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateUserInfo: (user) => dispatch(updateUserInfo(user)),
+        updatePaymentMethod: (user) => dispatch(updatePaymentMethod(user)),
+    }
+}
+export default compose(
+    withStyles(styles),
+    connect(mapStateToProps, mapDispatchToProps)
+)(ProfileDetail)

@@ -4,7 +4,7 @@ import Album from './components/album/Album';
 import Register from './components/register/Register'
 import Appbar from './components/layout/Appbar'
 import SignIn from './components/signin/SignIn'
-import Profile from './components/profile/Profile'
+import ProfileLayer from './components/profile/ProfileLayer'
 
 class App extends Component {
   render() {
@@ -17,7 +17,7 @@ class App extends Component {
             <Route exact path = "/" component={Album} />  
             <Route exact path = "/register" component={Register} />
             <Route exact path = "/signin" component={SignIn} />
-            <Route exact path = "/profile" component={Profile} />
+            <Route exact path = "/profile" component={ProfileLayer} />
           </Switch>
 
         </div>

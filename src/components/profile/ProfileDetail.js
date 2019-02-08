@@ -11,6 +11,7 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
         padding: '1rem',
+        maxWidth: 800,
     },
     tabsRoot: {
         borderBottom: '1px solid #e8e8e8',
@@ -51,11 +52,6 @@ const styles = theme => ({
     typography: {
         padding: theme.spacing.unit * 3,
     },
-    tabRoot: {
-        paddingTop: theme.spacing.unit * 3,
-        width: '80%',
-        margin: 'auto',
-    }
 });
 
 
@@ -76,8 +72,7 @@ class ProfileDetail extends Component {
     UserInfos = () => {
         return (
             <React.Fragment>
-                <TextField fullWidth={true}/>
-                <TextField fullWidth={true}/>
+                <Typography variant="body1" >asd</Typography>
             </React.Fragment>
         )
     }

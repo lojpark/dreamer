@@ -8,7 +8,7 @@ const styles = theme => ({
     img: {
         margin: '0 auto',
         width: '100%',
-        maxHeight: 300
+        
     },
     section: {
         paddingTop: '1rem',
@@ -20,7 +20,9 @@ const styles = theme => ({
         fontSize: 16,
     },
     root: {
-        padding: '1rem'
+        padding: '1rem',
+        maxWidth: 250,
+        margin: 'auto',
     }
 
 })
@@ -40,10 +42,10 @@ class ProfileCareer extends Component {
                 </div>
 
                 <Typography variant="h5" gutterBottom style={{ fontWeight: 'bold' }}>Name</Typography>
-                <Typography variant="caption">Career</Typography>
-                <Typography variant="caption">Career1</Typography>
-                <Typography variant="caption">Career2</Typography>
-                <Typography variant="caption">Career3</Typography>
+                <Typography variant="body1">Career</Typography>
+                <Typography variant="body1">Career1</Typography>
+                <Typography variant="body1">Career2</Typography>
+                <Typography variant="body1">Career3</Typography>
 
                 <p />
                 <Button variant="contained" style={{color: 'grey', paddingTop: 2, paddingBottom: 2}} fullWidth={true}>Edit</Button>

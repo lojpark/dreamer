@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { updateUserInfo, updatePaymentMethod } from '../../store/actions/userActions'
+import { updateUserInfo, updatePaymentMethod, buyCoin } from '../../store/actions/userActions'
 
 const styles = theme => ({
     root: {
@@ -151,6 +151,7 @@ class ProfileDetail extends Component {
                         color="primary"
                         className={classes.button}
                         style={{ marginLeft: 10 }}
+                        onClick={this.props.buyCoin}
                     >
                         Buy Coin
                     </Button>
@@ -230,6 +231,7 @@ const mapDispatchToProps = dispatch => {
     return {
         updateUserInfo: (user) => dispatch(updateUserInfo(user)),
         updatePaymentMethod: (user) => dispatch(updatePaymentMethod(user)),
+        buyCoin: () => dispatch(buyCoin()),
     }
 }
 export default compose(

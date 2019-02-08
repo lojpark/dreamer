@@ -34,3 +34,27 @@ export const updatePaymentMethod = ({cardName, cardNumber, cvv, expDate }) => {
         })
     }  
 }
+
+export const buyCoin = () => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const uid = getState().firebase.auth.uid;
+        const firestore = getFirestore();
+
+        const docRef = firestore.collection('users').doc(uid);
+        firestore.runTransaction(transaction => {
+            return transaction.get(docRef).then(doc => {
+                let coin = doc.data().coin;
+                if (coin === undefined) coin = 0;
+                coin++;
+                
+                console.log(coin); 
+                transaction.update(docRef, {coin});
+                return coin;
+            });
+        }).then(coin => {
+            dispatch({type: 'BUY_COIN_SUCCESS', coin});
+        }).catch(err => {
+            dispatch({type: 'BUY_COIN_FAIL', err})
+        })
+    }
+}

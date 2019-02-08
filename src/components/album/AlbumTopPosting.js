@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -9,18 +10,24 @@ import 'jodit';
 import 'jodit/build/jodit.min.css';
 import JoditEditor from "jodit-react";
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import './AlbumTopPosting.css'
 
 const styles = theme => ({
     buttons: {
         display: 'flex',
         justifyContent: 'center',
-      },
-      button: {
+    },
+    button: {
         marginTop: theme.spacing.unit,
         marginLeft: theme.spacing.unit,
-      },
-  });
+    },
+});
 
 class AlbumTopPosting extends React.Component {
     constructor(props) {
@@ -30,6 +37,8 @@ class AlbumTopPosting extends React.Component {
             content: '',
             thumbnailImage: '',
             thumbnailContent: '',
+            popupOpen: false,
+            popupContent: '',
         }
     }
 
@@ -39,7 +48,7 @@ class AlbumTopPosting extends React.Component {
     updateContent = (value) => {
         this.setState({
             content: value,
-            thumbnailContent: this.jodit.getEditorText()
+            thumbnailContent: this.jodit.getEditorText().substring(0, 100) + "..."
         })
 
         var left = this.state.content.split('<img src="');
@@ -47,32 +56,52 @@ class AlbumTopPosting extends React.Component {
         if (left.length > 1) {
             // Extract image
             var image = left[1].split('"')[0];
-            
+
             this.setState({
                 thumbnailImage: image,
             })
         }
     }
 
+    handleClose = () => {
+        this.setState({
+            popupOpen: false,
+        });
+    };
+
     handleSubmit = (e) => {
         e.preventDefault();
 
-        this.props.createPost(this.state);
-        this.setState({
-            title: '',
-            content: ''
-        })
+        if (this.state.title == '') {
+            this.setState({
+                popupOpen: true,
+                popupContent: 'You cannot leave a title empty. Please enter the title.'
+            });
+        }
+        else if (this.state.content == '') {
+            this.setState({
+                popupOpen: true,
+                popupContent: 'You cannot leave a content empty. Please enter the content'
+            });
+        }
+        else {
+            this.props.createPost(this.state);
+            this.setState({
+                title: '',
+                content: ''
+            })
+        }
     };
 
     /**
      * @property Jodit jodit instance of native Jodit
      */
-	jodit;
-	setRef = jodit => this.jodit = jodit;
-	
-	config = {
-		readonly: false // all options from https://xdsoft.net/jodit/doc/
-	}
+    jodit;
+    setRef = jodit => this.jodit = jodit;
+
+    config = {
+        readonly: false // all options from https://xdsoft.net/jodit/doc/
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -95,6 +124,25 @@ class AlbumTopPosting extends React.Component {
                         Share your dream
                     </Button>
                 </div>
+
+                <Dialog
+                    open={this.state.popupOpen}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Error"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            { this.state.popupContent }
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary" autoFocus>
+                            close
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }

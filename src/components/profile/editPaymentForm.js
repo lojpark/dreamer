@@ -24,6 +24,12 @@ class PaymentDialog extends React.Component {
 
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if(nextProps.paymentChangeSuccess){
+            this.handleClose();
+        }
+    }
+
     handleClose = () => {
         this.setState({open:false});
         this.props.setEditPayment(false);
@@ -38,6 +44,7 @@ class PaymentDialog extends React.Component {
         this.setState({ [e.target.id] : e.target.value});
     };
     render() {
+        const {paymentChangeSuccess,paymentChangeError} = this.props;
         return (
             <div>
                 <Dialog
@@ -89,9 +96,16 @@ class PaymentDialog extends React.Component {
 }
 
 
+const mapStateToProps= (state) =>{
+    return {
+        paymentChangeSuccess : state.auth.paymentChangeSuccess,
+        paymentChangeError : state.auth.paymentChangeError,
+    }
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         changePayment: (UserPayment) => dispatch(changePayment(UserPayment))
     }
 };
-export default connect(null,mapDispatchToProps)(PaymentDialog);
+export default connect(mapStateToProps,mapDispatchToProps)(PaymentDialog);

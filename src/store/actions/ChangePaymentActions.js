@@ -12,7 +12,7 @@ export const changePayment = (UserPayment) => {
                 cvv : UserPayment.cvv
             }
         },{merge:true}).then(() => {
-            dispatch({type: 'PAYMENT_SUCCESS',payment_info : UserPayment});
+            dispatch({type: 'PAYMENT_SUCCESS'});
         }).catch(error => {
                 dispatch({type: 'PAYMENT_ERROR', error})
         })

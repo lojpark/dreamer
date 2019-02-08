@@ -38,9 +38,17 @@ const styles = theme => (
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 class Album extends React.Component {
+  state = {
+    viewPost: null,
+  };
+
   // Get state from child (AlbumItem)
   myCallback = (dataFromChild) => {
     console.log(dataFromChild);
+
+    this.setState({
+      viewPost: dataFromChild
+    });
   };
 
   render() {
@@ -60,6 +68,9 @@ class Album extends React.Component {
                 )
               })}
             </Grid>
+          </div>
+          <div dangerouslySetInnerHTML={
+            {__html: (this.state.viewPost ? this.state.viewPost.content : '')} }>
           </div>
         </main>
         <Footer />

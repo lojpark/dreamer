@@ -38,6 +38,11 @@ const styles = theme => (
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 class Album extends React.Component {
+  // Get state from child (AlbumItem)
+  myCallback = (dataFromChild) => {
+    console.log(dataFromChild);
+  };
+
   render() {
     const { classes, posts, auth } = this.props;
     return (
@@ -51,7 +56,7 @@ class Album extends React.Component {
             <Grid container spacing={40}>
               {posts.map(post => {
                 return (
-                  <AlbumItem card={post.id} post={post} key={post.id}/>
+                  <AlbumItem card={post.id} post={post} key={post.id} callbackFromParent={this.myCallback}/>
                 )
               })}
             </Grid>

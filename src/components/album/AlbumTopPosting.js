@@ -48,7 +48,7 @@ class AlbumTopPosting extends React.Component {
     updateContent = (value) => {
         this.setState({
             content: value,
-            thumbnailContent: this.jodit.getEditorText()
+            thumbnailContent: this.jodit.getEditorText().substring(0, 100) + "..."
         })
 
         var left = this.state.content.split('<img src="');

@@ -37,6 +37,10 @@ const styles = theme => ({
   cardGrid: {
     padding: `${theme.spacing.unit * 8}px 0`,
   },
+  author: {
+    color: '#777777',
+    fontSize: 18
+  }
 });
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -92,12 +96,16 @@ class Album extends React.Component {
           >
             <DialogTitle id="scroll-dialog-title">
               { this.state.viewPost ? this.state.viewPost.title : '' }
+              <div className={classes.author}>
+                { this.state.viewPost ? this.state.viewPost.authorFirstName : '' }
+                &nbsp;
+                { this.state.viewPost ? this.state.viewPost.authorLastName : '' }
+              </div>
             </DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                <div dangerouslySetInnerHTML={
+              <DialogContentText dangerouslySetInnerHTML={
                   { __html: (this.state.viewPost ? this.state.viewPost.content : '') }
-                } />
+                }>
               </DialogContentText>
             </DialogContent>
             <DialogActions>

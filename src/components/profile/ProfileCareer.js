@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import EditCareer from './EditCareer'
-import { deleteCareer } from '../../store/actions/userActions'
+import { deleteCareer, uploadProfilePic } from '../../store/actions/userActions'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
@@ -32,8 +32,9 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
     }
 
-})
+});
 
+const basicProfileImg = "https://www.gravatar.com/avatar/05b6d7cc7c662bf81e01b39254f88a49?d=identicon";
 class ProfileCareer extends Component {
     state = {
         isEditing: false,
@@ -44,15 +45,23 @@ class ProfileCareer extends Component {
     handleFinishEdit = () => {
         this.setState({ isEditing: false });
     }
+    handleChangeProfile = (e) => {
+        if (e.target.files.length > 0){
+            this.props.uploadProfilePic(e.target.files[0]);
+        }
+    }
     render() {
         const { classes, user } = this.props;
         return (
             <div className={classes.root}>
-                <img src="https://www.gravatar.com/avatar/05b6d7cc7c662bf81e01b39254f88a49?d=identicon" alt="profile"
+                <img src={user.profile_url ? (user.profile_url) : (basicProfileImg)} alt="profile"
                     className={classes.img}
                 />
 
-                <Button variant="contained" color="primary" fullWidth={true}>Change profile</Button>
+                <Button variant="contained" color="primary" component="label" fullWidth={true}>
+                    Change profile
+                    <input id="profilePic" onChange={this.handleChangeProfile} type="file" style={{display: 'none'}} />
+                </Button>
                 <div style={{ paddingTop: '1rem', paddingBottom: '1rem' }} >
                     <Divider />
                 </div>
@@ -90,7 +99,8 @@ class ProfileCareer extends Component {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        deleteCareer: (idx) => dispatch(deleteCareer(idx)),   
+        deleteCareer: (idx) => dispatch(deleteCareer(idx)),
+        uploadProfilePic: (file) => dispatch(uploadProfilePic(file)),   
     }
 }
 export default compose(

@@ -105,3 +105,32 @@ export const deleteCareer = (target_idx) => {
         })
     }
 }
+const uploadPhoto = (storage, file, uid) => {
+    return new Promise((resolve, reject) => {
+        storage.ref('profiles').child(uid + '/profile_pic').put(file).then(snap => {
+            storage.ref('profiles').child(uid + '/profile_pic').getDownloadURL().then(url => {
+                resolve(url);
+            })
+        }).catch(err => {
+            reject(err);
+        })
+    })
+}
+export const uploadProfilePic = (file) => {
+    return async (dispatch, getState, {getFirebase, getFirestore}) => {
+        const uid = getState().firebase.auth.uid;
+        const firestore = getFirestore();
+        const storage = getFirebase().storage();
+        console.log(uid);
+        let profile_url = await uploadPhoto(storage, file, uid);
+        console.log(profile_url);
+        firestore.collection('users').doc(uid).update({
+            profile_url
+        }).then(() => {
+            dispatch({type: 'PROFILE_UPDATE_SUCCESS'});
+        }).catch(err => {
+            dispatch({type: 'PROFILE_UPDATE_FAIL', err});
+        })
+
+    }
+}

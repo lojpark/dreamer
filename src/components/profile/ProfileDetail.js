@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import PaymentRegisterForm from '../register/PaymentRegisterForm'
 import TextField from '@material-ui/core/TextField'
-
+import Button from '@material-ui/core/Button'
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -52,12 +52,20 @@ const styles = theme => ({
     typography: {
         padding: theme.spacing.unit * 3,
     },
+    textFieldWidth: {
+        width: 200,
+    },
+    button: {
+        margin: theme.spacing.unit * 3,
+    }
 });
 
 
 class ProfileDetail extends Component {
     state = {
         value: 0,
+        firstName: "",
+        lastName: "",
     }
     handleChangeTab = (e, value) => {
         this.setState({
@@ -69,16 +77,54 @@ class ProfileDetail extends Component {
             [e.target.id]: e.target.value,
         })
     }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value,
+        })
+    }
     UserInfos = () => {
+        const { classes } = this.props;
         return (
             <React.Fragment>
-                <Typography variant="body1" >asd</Typography>
+
+                <TextField
+                    label="First name"
+                    className={classes.textFieldWidth}
+                    id="firstName"
+                    value={this.state.firstName}
+                    onChange={this.handleChange}
+                    style={{margin: 10}}
+                />
+
+                <TextField
+                    label="Last name"
+                    className={classes.textFieldWidth}
+                    id="lastName"
+                    value={this.state.lastName}
+                    onChange={this.handleChange}
+                    style={{margin: 10}}
+                />
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                 >
+                    Change
+                </Button>
             </React.Fragment>
         )
     }
+    componentDidMount = () => {
+        const { firstName, lastName} = this.props.user;
+        this.setState({
+            firstName, lastName
+        })
+    }
     render() {
-        const { classes } = this.props;
+        const { classes, user } = this.props;
         const { value } = this.state;
+        
         return (
             <div className={classes.root}>
 

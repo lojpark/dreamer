@@ -33,6 +33,7 @@ class AlbumTopPosting extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            cheer: 0,
             votelist: '',
             vote: 0,
             title: '',

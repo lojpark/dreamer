@@ -22,7 +22,6 @@ export const increaseVote = (post) => {
                     console.log(vote);
                     console.log(votelist);
                     transaction.update(docRef, {vote, votelist});
-                    //transaction.update(docRef, {votelist});
                     return vote;
                 });
             }).then(vote => {
@@ -33,4 +32,36 @@ export const increaseVote = (post) => {
             console.log('increaseVote')
         }       
     }
+}
+
+export const increaseCheer = (post) => {/*
+    return (dispatch, getState, { getFirebase, getFirestore }) => {   
+        const uid = getState().firebase.auth.uid;
+        const pid = post.id
+        console.log(post.votelist)
+        const firestore = getFirestore();
+        const docRef = firestore.collection('posts').doc(pid);
+        
+        
+        firestore.runTransaction(transaction => {
+            return transaction.get(docRef).then(doc => {
+                let vote = doc.data().vote;
+                let votelist = doc.data().votelist;
+                if (vote === undefined) vote = 0;
+                vote++;
+                if(votelist === undefined) votelist = '';
+                votelist[uid] = true
+                console.log(vote);
+                console.log(votelist);
+                transaction.update(docRef, {vote, votelist});
+                return vote;
+            });
+        }).then(vote => {
+            dispatch({type: 'VOTE_INC_SUCCESS', vote});
+        }).catch(err => {
+            dispatch({type: 'VOTE_INC_FAIL', err})
+        })
+        console.log('increaseVote')
+               
+    }*/
 }

@@ -55,7 +55,8 @@ export const increaseVote = (post) => {
 
 export const increaseCheer = (post) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {   
-        const uid = getState().firebase.auth.uid;
+        //const uid = getState().firebase.auth.uid;
+        const uid = post.authorId
         const pid = post.id
         const firestore = getFirestore();
         const docRef = firestore.collection('posts').doc(pid);

@@ -27,6 +27,18 @@ const voteReducer = (state = initState, action) => {
                 ...state,
                 userResult: 'cheer increase fail'
             }
+        case 'COIN_INC_SUCCESS':
+            console.log('coin inc', action.post)
+            return {
+                ...state,
+                userResult: 'coin increase success'
+            }
+        case 'COIN_INC_FAIL':
+            console.log('coin inc error', action.error)
+            return {
+                ...state,
+                userResult: 'coin increase fail'
+            }
         case 'ALREADY_VOTED':
             console.log('already voted', action.post)
             return {

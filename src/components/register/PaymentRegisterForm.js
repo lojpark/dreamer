@@ -9,7 +9,7 @@ class PaymentRegisterForm extends React.Component {
   };
   render() {
     const { cardName, cardNumber, cvv, expDate } = this.props.card;
-    
+    console.log(this.props.card);
     return (
       <React.Fragment>
         <Typography variant="h6" gutterBottom>

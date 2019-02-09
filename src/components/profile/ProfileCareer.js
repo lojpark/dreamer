@@ -48,33 +48,35 @@ class ProfileCareer extends Component {
         this.setState({ isEditing: false });
     }
     handleChangeProfile = (e) => {
-        if (e.target.files.length > 0){
+        if (e.target.files.length > 0) {
             this.props.uploadProfilePic(e.target.files[0]);
-            this.setState({isUploading: true})
+            this.setState({ isUploading: true })
         }
     }
-    componentWillReceiveProps = ({imageUploadResult}) => {
-        if (imageUploadResult) this.setState({isUploading: false})
+    componentWillReceiveProps = ({ imageUploadResult }) => {
+        if (imageUploadResult) this.setState({ isUploading: false })
     }
     render() {
         const { classes, user } = this.props;
         return (
             <div className={classes.root}>
                 {this.state.isUploading ? (
-                    <div style={{textAlign: 'center'}}>
+                    <div style={{ textAlign: 'center' }}>
                         <CircularProgress />
                     </div>
                 ) : (
-                    <img src={user.profile_url ? (user.profile_url) : (basicProfileImg)} alt="profile"
-                    className={classes.img}
-                />
-                )}
+                        <React.Fragment>
+                            <img src={user.profile_url ? (user.profile_url) : (basicProfileImg)} alt="profile"
+                                className={classes.img} />
+
+                            <Button variant="contained" color="primary" component="label" fullWidth={true}>
+                                Change profile
+                            <input id="profilePic" onChange={this.handleChangeProfile} type="file" style={{ display: 'none' }} />
+                            </Button>
+                        </React.Fragment>
+                    )}
 
 
-                <Button variant="contained" color="primary" component="label" fullWidth={true}>
-                    Change profile
-                    <input id="profilePic" onChange={this.handleChangeProfile} type="file" style={{display: 'none'}} />
-                </Button>
                 <div style={{ paddingTop: '1rem', paddingBottom: '1rem' }} >
                     <Divider />
                 </div>
@@ -118,7 +120,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         deleteCareer: (idx) => dispatch(deleteCareer(idx)),
-        uploadProfilePic: (file) => dispatch(uploadProfilePic(file)),   
+        uploadProfilePic: (file) => dispatch(uploadProfilePic(file)),
     }
 }
 export default compose(

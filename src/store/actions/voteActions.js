@@ -1,4 +1,5 @@
 import { firestoreReducer } from "react-redux-firebase";
+import { resetUserResult } from "./userActions";
 
 export const increaseVote = (post) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {   
@@ -29,6 +30,25 @@ export const increaseVote = (post) => {
                 dispatch({type: 'VOTE_INC_FAIL', err})
             })
             console.log('increaseVote')
+            /*firestore.runTransaction(transaction => {
+                return transaction.get(docRef).then(doc => {
+                    let vote = doc.data().vote;
+                    let votelist = doc.data().votelist;
+                    if (vote === undefined) vote = 0;
+                    vote++;
+                    if(votelist === undefined) votelist = '';
+                    votelist[uid] = true
+                    console.log(vote);
+                    console.log(votelist);
+                    transaction.update(docRef, {vote, votelist});
+                    return vote;
+                });
+            }).then(vote => {
+                dispatch({type: 'VOTE_INC_SUCCESS', vote});
+            }).catch(err => {
+                dispatch({type: 'VOTE_INC_FAIL', err})
+            })
+            console.log('increaseVote')*/
         }       
     }
 }
@@ -39,13 +59,14 @@ export const increaseCheer = (post) => {
         const pid = post.id
         const firestore = getFirestore();
         const docRef = firestore.collection('posts').doc(pid);
-        
-        firestore.runTransaction(transaction => {
+        const usrRef = firestore.collection('users').doc(uid);
+
+        firestore.runTransaction(transaction => { // may merge two transaction function?
             return transaction.get(docRef).then(doc => {
                 let cheer = doc.data().cheer;
                 if (cheer === undefined) cheer = 0;
                 cheer++;
-                console.log(cheer);
+                console.log('cheer', cheer);
                 transaction.update(docRef, {cheer});
                 return cheer;
             });
@@ -54,6 +75,21 @@ export const increaseCheer = (post) => {
         }).catch(err => {
             dispatch({type: 'CHEER_INC_FAIL', err})
         })
-        console.log('increasecheer')            
+        
+        firestore.runTransaction(transaction => { // double-click makes double-change...
+            return transaction.get(usrRef).then(doc => {
+                let coin = doc.data().coin;
+                coin++; // it must -- , but coin checking now...
+                //console.log(vote);
+                transaction.update(usrRef, {coin});
+                return coin;
+            });
+        }).then(coin => {
+            dispatch({type: 'COIN_INC_SUCCESS', coin});
+        }).catch(err => {
+            dispatch({type: 'COIN_INC_FAIL', err})
+        })
+
+        console.log('increase cheer')            
     }
 }

@@ -55,14 +55,15 @@ export const increaseVote = (post) => {
 
 export const increaseCheer = (post) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {   
-        //const uid = getState().firebase.auth.uid;
-        const uid = post.authorId
+        const uid = getState().firebase.auth.uid;
+        const aid = post.authorId
         const pid = post.id
         const firestore = getFirestore();
         const docRef = firestore.collection('posts').doc(pid);
-        const usrRef = firestore.collection('users').doc(uid);
+        const userRef = firestore.collection('users').doc(uid);
+        const authRef = firestore.collection('users').doc(aid);
 
-        firestore.runTransaction(transaction => { // may merge two transaction function?
+        firestore.runTransaction(transaction => { // may merge three transaction function?
             return transaction.get(docRef).then(doc => {
                 let cheer = doc.data().cheer;
                 if (cheer === undefined) cheer = 0;
@@ -78,11 +79,25 @@ export const increaseCheer = (post) => {
         })
         
         firestore.runTransaction(transaction => { // double-click makes double-change...
-            return transaction.get(usrRef).then(doc => {
+            return transaction.get(userRef).then(doc => {
+                let coin = doc.data().coin;
+                coin--; // it must -- , but coin checking now...
+                //console.log(vote);
+                transaction.update(userRef, {coin});
+                return coin;
+            });
+        }).then(coin => {
+            dispatch({type: 'COIN_INC_SUCCESS', coin});
+        }).catch(err => {
+            dispatch({type: 'COIN_INC_FAIL', err})
+        })
+
+        firestore.runTransaction(transaction => { // double-click makes double-change...
+            return transaction.get(authRef).then(doc => {
                 let coin = doc.data().coin;
                 coin++; // it must -- , but coin checking now...
                 //console.log(vote);
-                transaction.update(usrRef, {coin});
+                transaction.update(authRef, {coin});
                 return coin;
             });
         }).then(coin => {

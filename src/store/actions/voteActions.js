@@ -1,19 +1,15 @@
 import { firestoreReducer } from "react-redux-firebase";
 
 export const increaseVote = (post) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
-        
-        //console.log(post.votelist['ID0'])
-        //console.log(post.votelist['ID1']) 
+    return (dispatch, getState, { getFirebase, getFirestore }) => {   
         const uid = getState().firebase.auth.uid;
         const pid = post.id
         console.log(post.votelist)
         const firestore = getFirestore();
         const docRef = firestore.collection('posts').doc(pid);
         if(post.votelist[uid] === true){
-            //console.log('Already voted')
             dispatch({type: 'ALREADY_VOTED'})
-            // maybe user can vote more than once time?
+            // maybe user can vote more than once time using more money/coin?
         }else{
             firestore.runTransaction(transaction => {
                 return transaction.get(docRef).then(doc => {

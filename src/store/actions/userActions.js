@@ -69,13 +69,16 @@ export const addCareer = (career) => {
     return (dispatch, getState, {getFirestore}) => {
         const user = getState().firestore.ordered.users[0];
         const firestore = getFirestore();
+        let careers;
         
-        let careers = user.careers.map(item => {
-            return item
-        });
-        if (user.careers === undefined) careers = [];
+        if (user.careers === undefined)
+            careers = [];
+        else {
+            careers = user.careers.map(item => {
+                return item
+            });
+        }
         
-        console.log(careers, career);
         careers.push(career);
         firestore.collection('users').doc(user.id).update({
             careers

@@ -10,6 +10,7 @@ import AlbumTop from './AlbumTop'
 import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { increaseVote } from '../../store/actions/voteActions'
 import { firestoreConnect } from 'react-redux-firebase'
 
 import Button from '@material-ui/core/Button';
@@ -66,6 +67,24 @@ class Album extends React.Component {
   }
 
   handleVote = () => {
+    console.log(this.state.viewPost)
+    console.log(this.state.viewPost.vote)
+    this.props.increaseVote(this.state.viewPost);
+    //this.state.viewPost.vote = this.state.viewPost.vote + 1 => not update data on firebase
+    /*updateVote: () => {
+      const postid = this.state.viewPost.id
+      let ref = firebaseDb.ref(postid)
+      return ref
+      .child(id)
+      .update(data)
+      .then(())
+    }*/
+    
+    
+    //firebase.database
+    //voteAction()
+    
+    console.log('vote end')
     // TODO
   }
 
@@ -144,9 +163,15 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increaseVote: (post) => dispatch(increaseVote(post))
+  }
+}
+
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([
     { collection: 'posts' }
   ])

@@ -54,11 +54,11 @@ class AlbumItem extends React.Component {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary">
+                        <Button size="small" disabled={true} color="primary">
                             {post.vote}
                         </Button>
-                        <Button size="small" color="primary">
-                            temp
+                        <Button size="small" disabled={true} color="primary">
+                            {post.cheer}
                         </Button>
                     </CardActions>
                 </Card>

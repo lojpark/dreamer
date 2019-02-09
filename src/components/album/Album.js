@@ -10,7 +10,7 @@ import AlbumTop from './AlbumTop'
 import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { increaseVote } from '../../store/actions/voteActions'
+import { increaseVote, increaseCheer } from '../../store/actions/voteActions'
 import { firestoreConnect } from 'react-redux-firebase'
 
 import Button from '@material-ui/core/Button';
@@ -66,13 +66,35 @@ class Album extends React.Component {
     });
   }
 
+  handleCheer = () => {
+    this.props.increaseCheer(this.state.viewPost);
+    this.setState({
+      open: false
+    })
+  }
+
   handleVote = () => {
     this.props.increaseVote(this.state.viewPost);
+    console.log(this.state.userResult)
+    //if(this.state.userResult === 'ALREADY_VOTED')
     this.setState({
-      open: false,
-    });  
-    console.log('vote end')
+      open: false
+    });
+    
+    console.log('popup end')
   }
+  /*
+  componentWillReceiveProps = ({ userResult }) => {
+    if (userResult) {
+      this.setState({
+        popupOpen: true,
+        popupContent: userResult,
+        userresult: ''
+      })
+      //  alert(userResult);
+      //  this.props.resetUserResult(); //reset so alert does not show up twice
+    }
+  }*/
 
   render() {
     const { classes, posts, auth } = this.props;
@@ -117,6 +139,9 @@ class Album extends React.Component {
               <Button onClick={this.handleClose} color="primary">
                 Close
               </Button>
+              <Button onClick={this.handleCheer} color="primary">
+                Cheer
+              </Button>
               <Button onClick={this.handleVote} color="primary">
                 Vote
               </Button>
@@ -137,12 +162,14 @@ const mapStateToProps = (state) => {
   //this data is from rootReducer
   if (state.firestore.ordered.posts) {
     return {
+      userResult: state.user.userResult,
       posts: state.firestore.ordered.posts,
       auth: state.firebase.auth,
     }
   }
   else {
     return {
+      userResult: state.user.userResult,
       posts: state.post.posts,
       auth: state.firebase.auth,
     }
@@ -151,7 +178,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increaseVote: (post) => dispatch(increaseVote(post))
+    increaseVote: (post) => dispatch(increaseVote(post)),
+    increaseCheer: (post) => dispatch(increaseCheer(post))
   }
 }
 

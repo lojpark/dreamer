@@ -10,7 +10,7 @@ import AlbumTop from './AlbumTop'
 import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { increaseVote, increaseCheer } from '../../store/actions/voteActions'
+import { increaseVote, donate } from '../../store/actions/voteActions'
 import { firestoreConnect } from 'react-redux-firebase'
 
 import Button from '@material-ui/core/Button';
@@ -66,8 +66,8 @@ class Album extends React.Component {
     });
   }
 
-  handleCheer = () => {
-    this.props.increaseCheer(this.state.viewPost);
+  handleDonate = () => {
+    this.props.donate(this.state.viewPost);
     this.setState({
       open: false
     })
@@ -75,13 +75,10 @@ class Album extends React.Component {
 
   handleVote = () => {
     this.props.increaseVote(this.state.viewPost);
-    console.log(this.state.userResult)
-    //if(this.state.userResult === 'ALREADY_VOTED')
+    
     this.setState({
       open: false
     });
-    
-    console.log('popup end')
   }
   /*
   componentWillReceiveProps = ({ userResult }) => {
@@ -139,8 +136,8 @@ class Album extends React.Component {
               <Button onClick={this.handleClose} color="primary">
                 Close
               </Button>
-              <Button onClick={this.handleCheer} color="primary">
-                Cheer
+              <Button onClick={this.handleDonate} color="primary">
+                Donate
               </Button>
               <Button onClick={this.handleVote} color="primary">
                 Vote
@@ -179,7 +176,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     increaseVote: (post) => dispatch(increaseVote(post)),
-    increaseCheer: (post) => dispatch(increaseCheer(post))
+    donate: (post) => dispatch(donate(post))
   }
 }
 

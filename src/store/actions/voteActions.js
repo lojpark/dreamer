@@ -9,7 +9,6 @@ export const increaseVote = (post) => {
         const docRef = firestore.collection('posts').doc(pid);
         if(post.votelist[uid] === true){
             dispatch({type: 'ALREADY_VOTED'})
-            // maybe user can vote more than once time using more money/coin?
         }else{
             firestore.runTransaction(transaction => {
                 return transaction.get(docRef).then(doc => {
@@ -34,34 +33,27 @@ export const increaseVote = (post) => {
     }
 }
 
-export const increaseCheer = (post) => {/*
+export const increaseCheer = (post) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {   
         const uid = getState().firebase.auth.uid;
         const pid = post.id
-        console.log(post.votelist)
         const firestore = getFirestore();
         const docRef = firestore.collection('posts').doc(pid);
         
-        
         firestore.runTransaction(transaction => {
             return transaction.get(docRef).then(doc => {
-                let vote = doc.data().vote;
-                let votelist = doc.data().votelist;
-                if (vote === undefined) vote = 0;
-                vote++;
-                if(votelist === undefined) votelist = '';
-                votelist[uid] = true
-                console.log(vote);
-                console.log(votelist);
-                transaction.update(docRef, {vote, votelist});
-                return vote;
+                let cheer = doc.data().cheer;
+                if (cheer === undefined) cheer = 0;
+                cheer++;
+                console.log(cheer);
+                transaction.update(docRef, {cheer});
+                return cheer;
             });
-        }).then(vote => {
-            dispatch({type: 'VOTE_INC_SUCCESS', vote});
+        }).then(cheer => {
+            dispatch({type: 'CHEER_INC_SUCCESS', cheer});
         }).catch(err => {
-            dispatch({type: 'VOTE_INC_FAIL', err})
+            dispatch({type: 'CHEER_INC_FAIL', err})
         })
-        console.log('increaseVote')
-               
-    }*/
+        console.log('increasecheer')            
+    }
 }

@@ -66,6 +66,13 @@ class Album extends React.Component {
     });
   }
 
+  handleCheer = () => {
+    this.props.increaseCheer(this.state.viewPost);
+    this.setState({
+      open: false
+    })
+  }
+
   handleVote = () => {
     this.props.increaseVote(this.state.viewPost);
     console.log(this.state.userResult)
@@ -132,6 +139,9 @@ class Album extends React.Component {
               <Button onClick={this.handleClose} color="primary">
                 Close
               </Button>
+              <Button onClick={this.handleCheer} color="primary">
+                Cheer
+              </Button>
               <Button onClick={this.handleVote} color="primary">
                 Vote
               </Button>
@@ -168,7 +178,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increaseVote: (post) => dispatch(increaseVote(post))
+    increaseVote: (post) => dispatch(increaseVote(post)),
+    increaseCheer: (post) => dispatch(increaseCheer(post))
   }
 }
 

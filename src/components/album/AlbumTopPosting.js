@@ -75,13 +75,13 @@ class AlbumTopPosting extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        if (this.state.title == '') {
+        if (this.state.title === '') {
             this.setState({
                 popupOpen: true,
                 popupContent: 'You cannot leave a title empty. Please enter the title.'
             });
         }
-        else if (this.state.content == '') {
+        else if (this.state.content === '') {
             this.setState({
                 popupOpen: true,
                 popupContent: 'You cannot leave a content empty. Please enter the content'

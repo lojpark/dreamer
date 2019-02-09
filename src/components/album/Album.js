@@ -80,6 +80,7 @@ class Album extends React.Component {
       open: false
     });
   }
+
   /*
   componentWillReceiveProps = ({ userResult }) => {
     if (userResult) {
@@ -104,7 +105,7 @@ class Album extends React.Component {
           <div className={classNames(classes.layout, classes.cardGrid)}>
             {/* End hero unit */}
             <Grid container spacing={40}>
-              {posts.map(post => {
+              {posts.sort((a, b) => b.vote - a.vote).map(post => {
                 return (
                   <AlbumItem card={post.id} post={post} key={post.id} callbackFromParent={this.myCallback} />
                 )

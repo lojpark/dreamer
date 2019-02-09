@@ -57,10 +57,10 @@ class AlbumItem extends React.Component {
                     </CardContent>
                     <CardActions>
                         <Button size="small" color="primary">
-                            View
+                            {post.vote}
                         </Button>
                         <Button size="small" color="primary">
-                            Edit
+                            temp
                         </Button>
                     </CardActions>
                 </Card>

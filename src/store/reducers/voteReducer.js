@@ -15,14 +15,14 @@ const voteReducer = (state = initState, action) => {
                 ...state,
                 userResult: 'vote increase fail'
             }
-        case 'CHEER_INC_SUCCESS':
-            console.log('cheer inc', action.post)
+        case 'DONATE_INC_SUCCESS':
+            console.log('donate inc', action.post)
             return {
                 ...state,
-                userResult: 'cheer increase success'
+                userResult: 'donate increase success'
             }
-        case 'CHEER_INC_FAIL':
-            console.log('cheer inc error', action.error)
+        case 'DONATE_INC_FAIL':
+            console.log('donate inc error', action.error)
             return {
                 ...state,
                 userResult: 'cheer increase fail'

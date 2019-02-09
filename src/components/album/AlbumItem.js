@@ -6,7 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
+import LikeIcon from '@material-ui/icons/ThumbUp';
+import MoneyIcon from '@material-ui/icons/AttachMoney';
 
 const styles = theme => (
     {
@@ -22,6 +23,28 @@ const styles = theme => (
         cardContent: {
             flexGrow: 1,
             cursor: 'pointer',
+        },
+        likeIcon: {
+            marginBottom: theme.spacing.unit * 0.8,
+            marginLeft: theme.spacing.unit * 2,
+            color: '#3487FF',
+        },
+        coinIcon: {
+            marginBottom: theme.spacing.unit * 0.8,
+            marginLeft: theme.spacing.unit * 2,
+            color: '#FF3322',
+        },
+        likeVote: {
+            marginBottom: theme.spacing.unit,
+            marginLeft: theme.spacing.unit,
+            marginRight: theme.spacing.unit,
+            color: '#3487FF',
+        },
+        coinVote: {
+            marginBottom: theme.spacing.unit,
+            marginLeft: theme.spacing.unit,
+            marginRight: theme.spacing.unit,
+            color: '#FF3322',
         },
     }
 )
@@ -54,12 +77,14 @@ class AlbumItem extends React.Component {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" disabled={true} color="primary">
+                        <LikeIcon className={classes.likeIcon} style={{ fontSize: 15 }}/>
+                        <div className={classes.likeVote} style={{ fontSize: 15 }}>
                             {post.vote}
-                        </Button>
-                        <Button size="small" disabled={true} color="primary">
-                            {post.cheer}
-                        </Button>
+                        </div>
+                        <MoneyIcon className={classes.coinIcon} style={{ fontSize: 15 }}/>
+                        <div className={classes.coinVote} style={{ fontSize: 15 }}>
+                            {post.coin}
+                        </div>
                     </CardActions>
                 </Card>
             </Grid>

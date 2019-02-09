@@ -9,6 +9,7 @@ import { firebaseReducer } from 'react-redux-firebase';
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    vote: voteReducer,
     post: postReducer,
     user: userReducer,
     firestore: firestoreReducer,

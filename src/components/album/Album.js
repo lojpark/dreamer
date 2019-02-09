@@ -67,25 +67,11 @@ class Album extends React.Component {
   }
 
   handleVote = () => {
-    console.log(this.state.viewPost)
-    console.log(this.state.viewPost.vote)
     this.props.increaseVote(this.state.viewPost);
-    //this.state.viewPost.vote = this.state.viewPost.vote + 1 => not update data on firebase
-    /*updateVote: () => {
-      const postid = this.state.viewPost.id
-      let ref = firebaseDb.ref(postid)
-      return ref
-      .child(id)
-      .update(data)
-      .then(())
-    }*/
-    
-    
-    //firebase.database
-    //voteAction()
-    
+    this.setState({
+      open: false,
+    });  
     console.log('vote end')
-    // TODO
   }
 
   render() {

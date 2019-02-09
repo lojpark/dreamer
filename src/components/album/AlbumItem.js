@@ -27,8 +27,6 @@ const styles = theme => (
 )
 
 class AlbumItem extends React.Component {
-
-
     handleSubmit = (e, post) => {
         e.preventDefault();
         

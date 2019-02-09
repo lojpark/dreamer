@@ -9,6 +9,9 @@ const voteReducer = (state = initState, action) => {
         case 'VOTE_INC_FAIL':
             console.log('vote inc error', action.error)
             return state;
+        case 'ALREADY_VOTED':
+            console.log('already voted', action.post)
+            return state;
         default:
             return state;
     }

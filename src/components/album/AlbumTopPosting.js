@@ -75,7 +75,13 @@ class AlbumTopPosting extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        if (this.state.title === '') {
+        if (this.props.profile.coin <= 0) {
+            this.setState({
+                popupOpen: true,
+                popupContent: 'You need at least one coin for share your dream. Please charge your coin first.'
+            });
+        }
+        else if (this.state.title === '') {
             this.setState({
                 popupOpen: true,
                 popupContent: 'You cannot leave a title empty. Please enter the title.'
@@ -107,6 +113,7 @@ class AlbumTopPosting extends React.Component {
     }
     render() {
         const { classes } = this.props;
+
         return (
             <div className="posting">
                 <input
@@ -134,7 +141,7 @@ class AlbumTopPosting extends React.Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"Error"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"Wait"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
                             { this.state.popupContent }

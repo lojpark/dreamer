@@ -101,12 +101,13 @@ class Album extends React.Component {
   }
 
   render() {
-    const { classes, posts, auth } = this.props;
+    const { classes, posts, auth, profile } = this.props;
+
     return (
       <React.Fragment>
         <CssBaseline />
         <main>
-          {auth.uid ? <AlbumTopPosting /> : <AlbumTop />}
+          {auth.uid ? <AlbumTopPosting profile={profile}/> : <AlbumTop />}
 
           <div className={classNames(classes.layout, classes.cardGrid)}>
             {/* End hero unit */}
@@ -169,6 +170,7 @@ const mapStateToProps = (state) => {
       voteResult: state.vote.result,
       posts: state.firestore.ordered.posts,
       auth: state.firebase.auth,
+      profile: state.firebase.profile,
     }
   }
   else {
@@ -176,6 +178,7 @@ const mapStateToProps = (state) => {
       voteResult: state.vote.result,
       posts: state.post.posts,
       auth: state.firebase.auth,
+      profile: state.firebase.profile,
     }
   }
 }

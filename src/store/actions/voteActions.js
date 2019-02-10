@@ -91,3 +91,9 @@ export const donate = (post) => {
         }
     }
 }
+
+export const resetVoteResult = () => {
+    return (dispatch) => {
+        dispatch({type: 'RESET_VOTE_RESULT'});
+    }
+}

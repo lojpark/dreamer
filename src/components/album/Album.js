@@ -10,7 +10,7 @@ import AlbumTop from './AlbumTop'
 import AlbumTopPosting from './AlbumTopPosting'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { increaseVote, donate } from '../../store/actions/voteActions'
+import { increaseVote, donate, resetVoteResult } from '../../store/actions/voteActions'
 import { firestoreConnect } from 'react-redux-firebase'
 
 import Button from '@material-ui/core/Button';
@@ -81,18 +81,17 @@ class Album extends React.Component {
     });
   }
 
-  componentWillReceiveProps = (userResult) => {
-    console.log(userResult);
-    /*
-    if (userResult) {
-      this.setState({
-        popupOpen: true,
-        popupContent: userResult,
-        userresult: ''
-      })
-      //  alert(userResult);
-      //  this.props.resetUserResult(); //reset so alert does not show up twice
-    }*/
+  componentWillReceiveProps = (vote) => {
+    switch (vote.voteResult) {
+      case 'already voted':
+        alert("You've already voted for this dream.");
+        this.props.resetVoteResult();
+        break;
+      case 'donate myself':
+        alert('Cannot donate myself.');
+        this.props.resetVoteResult();
+        break;
+    }
   }
 
   render() {
@@ -161,14 +160,14 @@ const mapStateToProps = (state) => {
   //this data is from rootReducer
   if (state.firestore.ordered.posts) {
     return {
-      userResult: state.user.userResult,
+      voteResult: state.vote.result,
       posts: state.firestore.ordered.posts,
       auth: state.firebase.auth,
     }
   }
   else {
     return {
-      userResult: state.user.userResult,
+      voteResult: state.vote.result,
       posts: state.post.posts,
       auth: state.firebase.auth,
     }
@@ -178,7 +177,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     increaseVote: (post) => dispatch(increaseVote(post)),
-    donate: (post) => dispatch(donate(post))
+    donate: (post) => dispatch(donate(post)),
+    resetVoteResult: (post) => dispatch(resetVoteResult(post))
   }
 }
 

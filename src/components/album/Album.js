@@ -88,8 +88,14 @@ class Album extends React.Component {
         this.props.resetVoteResult();
         break;
       case 'donate myself':
-        alert('Cannot donate myself.');
+        alert("Cannot donate myself.");
         this.props.resetVoteResult();
+        break;
+      case 'require more coin':
+        alert("You've not enough coin. Please charge your coin first.");
+        this.props.resetVoteResult();
+        break;
+      default:
         break;
     }
   }

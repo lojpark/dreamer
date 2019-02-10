@@ -52,6 +52,12 @@ const voteReducer = (state = initState, action) => {
                 ...state,
                 result: 'donate myself'
             }
+        case 'REQUIRE_MORE_COIN':
+            console.log('require more coin')
+            return {
+                ...state,
+                result: 'require more coin'
+            }
         case 'RESET_VOTE_RESULT':
             return {
                 ...state,

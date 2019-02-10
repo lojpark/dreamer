@@ -1,6 +1,3 @@
-import { firestoreReducer } from "react-redux-firebase";
-import { resetUserResult } from "./userActions";
-
 export const increaseVote = (post) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {   
         const uid = getState().firebase.auth.uid;
@@ -46,45 +43,53 @@ export const donate = (post) => {
         }
         // Donate
         else {
-            // Increase post's coin
-            firestore.runTransaction(transaction => {
-                return transaction.get(postRef).then(doc => {
-                    let coin = doc.data().coin;
-                    if (coin === undefined) coin = 0;
-                    coin++;
-                    transaction.update(postRef, {coin});
-                    return coin;
-                });
-            }).then(coin => {
-                dispatch({type: 'DONATE_INC_SUCCESS'});
-            }).catch(err => {
-                dispatch({type: 'DONATE_INC_FAIL', err})
-            })
-            
             // Decrease donator's coin
             firestore.runTransaction(transaction => {
                 return transaction.get(userRef).then(doc => {
                     let coin = doc.data().coin;
+                    if (coin <= 0) {
+                        transaction.update(userRef, {coin});
+                        return -1;
+                    }
                     coin--;
                     transaction.update(userRef, {coin});
                     return coin;
                 });
             }).then(coin => {
-                dispatch({type: 'COIN_INC_SUCCESS'});
-            }).catch(err => {
-                dispatch({type: 'COIN_INC_FAIL', err})
-            })
+                if (coin == -1)
+                    dispatch({type: 'REQUIRE_MORE_COIN'});
+                else {
+                    dispatch({type: 'COIN_INC_SUCCESS'});
 
-            // Increase author's coin
-            firestore.runTransaction(transaction => {
-                return transaction.get(authorRef).then(doc => {
-                    let coin = doc.data().coin;
-                    coin++;
-                    transaction.update(authorRef, {coin});
-                    return coin;
-                });
-            }).then(coin => {
-                dispatch({type: 'COIN_INC_SUCCESS'});
+                    // Increase post's coin
+                    firestore.runTransaction(transaction => {
+                        return transaction.get(postRef).then(doc => {
+                            let coin = doc.data().coin;
+                            if (coin === undefined) coin = 0;
+                            coin++;
+                            transaction.update(postRef, {coin});
+                            return coin;
+                        });
+                    }).then(coin => {
+                        dispatch({type: 'DONATE_INC_SUCCESS'});
+                    }).catch(err => {
+                        dispatch({type: 'DONATE_INC_FAIL', err})
+                    })
+
+                    // Increase author's coin
+                    firestore.runTransaction(transaction => {
+                        return transaction.get(authorRef).then(doc => {
+                            let coin = doc.data().coin;
+                            coin++;
+                            transaction.update(authorRef, {coin});
+                            return coin;
+                        });
+                    }).then(coin => {
+                        dispatch({type: 'COIN_INC_SUCCESS'});
+                    }).catch(err => {
+                        dispatch({type: 'COIN_INC_FAIL', err})
+                    })
+                }
             }).catch(err => {
                 dispatch({type: 'COIN_INC_FAIL', err})
             })

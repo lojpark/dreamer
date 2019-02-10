@@ -206,6 +206,9 @@ class ProfileDetail extends Component {
             alert(userResult);
             this.props.resetUserResult(); //reset so alert does not show up twice
         }
+        this.setState({
+            ...this.props.user
+        });
     }
 
     render() {

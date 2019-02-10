@@ -1,49 +1,67 @@
 const initState = {
+    result: null,
 }
 
 const voteReducer = (state = initState, action) => {
     switch (action.type) {
         case 'VOTE_INC_SUCCESS':
-            console.log('vote inc', action.post)
+            console.log('vote inc')
             return {
                 ...state,
-                userResult: 'vote increase success'
+                result: 'vote increase success'
             }
         case 'VOTE_INC_FAIL':
             console.log('vote inc error', action.error)
             return {
                 ...state,
-                userResult: 'vote increase fail'
+                result: 'vote increase fail'
             }
         case 'DONATE_INC_SUCCESS':
-            console.log('donate inc', action.post)
+            console.log('donate inc')
             return {
                 ...state,
-                userResult: 'donate increase success'
+                result: 'donate increase success'
             }
         case 'DONATE_INC_FAIL':
             console.log('donate inc error', action.error)
             return {
                 ...state,
-                userResult: 'cheer increase fail'
+                result: 'cheer increase fail'
             }
         case 'COIN_INC_SUCCESS':
-            console.log('coin inc', action.post)
+            console.log('coin inc')
             return {
                 ...state,
-                userResult: 'coin increase success'
+                result: 'coin increase success'
             }
         case 'COIN_INC_FAIL':
             console.log('coin inc error', action.error)
             return {
                 ...state,
-                userResult: 'coin increase fail'
+                result: 'coin increase fail'
             }
         case 'ALREADY_VOTED':
-            console.log('already voted', action.post)
+            console.log('already voted')
             return {
                 ...state,
-                userResult: 'already voted'
+                result: 'already voted'
+            }
+        case 'DONATE_MYSELF':
+            console.log('donate myself')
+            return {
+                ...state,
+                result: 'donate myself'
+            }
+        case 'REQUIRE_MORE_COIN':
+            console.log('require more coin')
+            return {
+                ...state,
+                result: 'require more coin'
+            }
+        case 'RESET_VOTE_RESULT':
+            return {
+                ...state,
+                result: null
             }
         default:
             return state;

@@ -4,7 +4,7 @@ const initState = {
 const voteReducer = (state = initState, action) => {
     switch (action.type) {
         case 'VOTE_INC_SUCCESS':
-            console.log('vote inc', action.post)
+            console.log('vote inc')
             return {
                 ...state,
                 userResult: 'vote increase success'
@@ -16,7 +16,7 @@ const voteReducer = (state = initState, action) => {
                 userResult: 'vote increase fail'
             }
         case 'DONATE_INC_SUCCESS':
-            console.log('donate inc', action.post)
+            console.log('donate inc')
             return {
                 ...state,
                 userResult: 'donate increase success'
@@ -28,7 +28,7 @@ const voteReducer = (state = initState, action) => {
                 userResult: 'cheer increase fail'
             }
         case 'COIN_INC_SUCCESS':
-            console.log('coin inc', action.post)
+            console.log('coin inc')
             return {
                 ...state,
                 userResult: 'coin increase success'
@@ -40,10 +40,16 @@ const voteReducer = (state = initState, action) => {
                 userResult: 'coin increase fail'
             }
         case 'ALREADY_VOTED':
-            console.log('already voted', action.post)
+            console.log('already voted')
             return {
                 ...state,
                 userResult: 'already voted'
+            }
+        case 'DONATE_MYSELF':
+            console.log('donate myself')
+            return {
+                ...state,
+                userResult: 'donate myself'
             }
         default:
             return state;

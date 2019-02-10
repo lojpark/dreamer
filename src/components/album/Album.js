@@ -81,8 +81,9 @@ class Album extends React.Component {
     });
   }
 
-  /*
-  componentWillReceiveProps = ({ userResult }) => {
+  componentWillReceiveProps = (userResult) => {
+    console.log(userResult);
+    /*
     if (userResult) {
       this.setState({
         popupOpen: true,
@@ -91,8 +92,8 @@ class Album extends React.Component {
       })
       //  alert(userResult);
       //  this.props.resetUserResult(); //reset so alert does not show up twice
-    }
-  }*/
+    }*/
+  }
 
   render() {
     const { classes, posts, auth } = this.props;

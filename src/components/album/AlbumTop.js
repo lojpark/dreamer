@@ -23,24 +23,22 @@ const AlbumTop = ({classes}) => {
         <div className={classes.heroUnit}>
             <div className={classes.heroContent}>
                 <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                    Album layout
+                    Dreamer
             </Typography>
                 <Typography variant="h6" align="center" color="textSecondary" paragraph>
-                    Something short and leading about the collection below—its contents, the creator, etc.
-                    Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-                    entirely.
+                    Share your dream and get opportunity to make it come true.
             </Typography>
                 <div className={classes.heroButtons}>
                     <Grid container spacing={16} justify="center">
                         <Grid item>
                             <Button variant="contained" color="primary">
-                                Main call to action
-                  </Button>
+                                &nbsp;&nbsp;Fresh Dreams&nbsp;&nbsp;
+                            </Button>
                         </Grid>
                         <Grid item>
                             <Button variant="outlined" color="primary">
-                                Secondary action
-                  </Button>
+                                Achieved Dreams
+                            </Button>
                         </Grid>
                     </Grid>
                 </div>

@@ -67,6 +67,11 @@ class Album extends React.Component {
   }
 
   handleDonate = () => {
+    if (!this.props.auth.uid) {
+      alert("Please sign in first!");
+      return;
+    }
+
     this.props.donate(this.state.viewPost);
     this.setState({
       open: false
@@ -74,8 +79,12 @@ class Album extends React.Component {
   }
 
   handleVote = () => {
+    if (!this.props.auth.uid) {
+      alert("Please sign in first!");
+      return;
+    }
+
     this.props.increaseVote(this.state.viewPost);
-    
     this.setState({
       open: false
     });
